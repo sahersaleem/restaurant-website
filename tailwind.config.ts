@@ -6,12 +6,18 @@ const config: Config = {
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+	"./node_modules/tw-elements/js/**/*.js"
   ],
   theme: {
   	extend: {
   		colors: {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
+			orange:'#FFC107',
+			orangeDark:"#eda232",
+			bgBlack:'#0D0D0DF2',
+			red:'#e02b30',
+	
   			card: {
   				DEFAULT: 'hsl(var(--card))',
   				foreground: 'hsl(var(--card-foreground))'
@@ -55,9 +61,13 @@ const config: Config = {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
-  		}
-  	}
+  		},
+	
+  	},
+	fontFamily:{
+		quickSand:"var('--font-quicksand')"
+	}
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate"),require("tw-elements/plugin.cjs")],
 };
 export default config;

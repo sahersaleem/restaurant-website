@@ -19,14 +19,32 @@ import {
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import Link from "next/link";
+import axios from "axios";
 
 const SignUp = () => {
-  const { register, handleSubmit } = useForm<signUpformData>({
+  const { register, handleSubmit} = useForm<signUpformData>({
     resolver: zodResolver(signUpSchema),
+    defaultValues:{
+      name:"",
+      date_of_birth:"",
+      email:"",
+      password:"",
+      town:"",
+      forename:""
+    }
   });
 
-  const handleForm = (data: signUpformData) => {
-    console.log(data);
+  const handleForm = async(data:any) => {
+    try {
+   const res = await axios.post('/api/signUp',data)
+   if(res){
+     console.log(res)
+   }
+
+    } catch (error)
+     {
+      console.log(error)
+    }
   };
 
   return (
@@ -53,7 +71,7 @@ const SignUp = () => {
                   <label className="font-semibold">Forename</label>
                   <div className="signUp-div">
                     <FiUser size={20} />
-                    <input {...register("name")} className="input" placeholder="Doe" />
+                    <input {...register("forename")} className="input" placeholder="Doe" />
                   </div>
                 </div>
               </div>
@@ -62,7 +80,7 @@ const SignUp = () => {
                 <label className="font-semibold">Town</label>
                 <div className="signUp-div">
                   <LuMapPin size={20} />
-                  <input placeholder="Saint-Pieere" className="input" />
+                  <input placeholder="Saint-Pieere" className="input"    {...register("town")}/>
                 </div>
                 
               </div>
@@ -70,7 +88,7 @@ const SignUp = () => {
                 <label className="font-semibold">Date of birth</label>
                 <div className="signUp-div">
                   <MdOutlineDateRange size={20} />
-                  <input placeholder="Saint-Pieere" className="input" type="date" />
+                  <input placeholder="Saint-Pieere" className="input" type="date" {...register("date_of_birth")} />
                 </div>
                 
               </div>
@@ -81,6 +99,7 @@ const SignUp = () => {
                   <input
                     placeholder="johndoe281@gmail.com"
                     className="input"
+                    {...register("email")}
                   />
                 </div>
               </div>
@@ -93,6 +112,8 @@ const SignUp = () => {
                     placeholder="password"
                     type="password"
                     className="input"
+                    {...register("password")}
+                    autoComplete="true"
                   />
                 </div>
 
@@ -102,7 +123,7 @@ const SignUp = () => {
                 </p>
               </div>
 
-              <Button className="w-full  ">To Register</Button>
+              <Button className="w-full bg-orange hover:bg-orangeDark " type="submit" onClick={handleForm}>To Register</Button>
             </form>
           </CardDescription>
         </CardContent>

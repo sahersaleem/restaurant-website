@@ -87,3 +87,11 @@
 input[type="date"] {
   @apply flex justify-between items-center;
 }
+
+.button{
+  @apply bg-[#D71313] px-4 py-3 hover:bg-orangeDark text-white text-lg font-bold rounded-lg
+}
+
+.homepage-btn{
+  @apply bg-gray-300 px-4 rounded-lg py-2 transition-all ease-linear
+}

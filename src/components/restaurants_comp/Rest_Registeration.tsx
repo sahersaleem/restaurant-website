@@ -25,14 +25,39 @@ import {
 } from "@/components/ui/card";
 import { Button } from "../ui/button";
 import Link from "next/link";
-
+import axios from "axios";
+import { useRestaurantContext } from "@/app/(restaurant)/_components/RstaurantContext";
 const RestaurantRegs = () => {
+  const { addRestaurantId } = useRestaurantContext();
   const { register, handleSubmit } = useForm<RestaurantRegisterationData>({
     resolver: zodResolver(RestaurantRegisterationSchema),
+    defaultValues: {
+      restaurantName: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+      address: "",
+      PhoneNumber: "",
+      description: "",
+      openingTime: "",
+      closingTime: "",
+      cuisineType: "",
+    },
   });
 
-  const handleForm = (data: RestaurantRegisterationData) => {
+  const handleForm = async (data: any) => {
     console.log(data);
+    try {
+      const res = await axios.post("/api/restaurant/create_account", data);
+      console.log(res)
+      console.log(res.data.rest._id)
+      if (res) {
+        addRestaurantId(res.data.rest._id);
+
+      }
+    } catch (error: any) {
+      console.log(error);
+    }
   };
 
   return (
@@ -64,7 +89,11 @@ const RestaurantRegs = () => {
                 <label className="font-semibold">Email Address</label>
                 <div className="signUp-div">
                   <MdOutlineMail size={20} />
-                  <input placeholder="johndoe281@gmail.com" className="input" />
+                  <input
+                    placeholder="johndoe281@gmail.com"
+                    className="input"
+                    {...register("email")}
+                  />
                 </div>
               </div>
 
@@ -77,6 +106,7 @@ const RestaurantRegs = () => {
                     placeholder="password"
                     type="password"
                     className="input"
+                    {...register("password")}
                   />
                 </div>
               </div>
@@ -90,6 +120,7 @@ const RestaurantRegs = () => {
                     placeholder="confirm password"
                     type="password"
                     className="input"
+                    {...register("confirmPassword")}
                   />
                 </div>
 
@@ -104,7 +135,11 @@ const RestaurantRegs = () => {
                 <div className="signUp-div">
                   {" "}
                   <MdOutlinePhone size={20} />
-                  <input placeholder="021...." className="input" />
+                  <input
+                    placeholder="021...."
+                    className="input"
+                    {...register("PhoneNumber")}
+                  />
                 </div>
               </div>
               <div>
@@ -112,7 +147,11 @@ const RestaurantRegs = () => {
                 <div className="signUp-div">
                   {" "}
                   <LuMapPin size={20} />
-                  <input placeholder="abc streer" className="input" />
+                  <input
+                    placeholder="abc streer"
+                    className="input"
+                    {...register("address")}
+                  />
                 </div>
               </div>
 
@@ -121,7 +160,11 @@ const RestaurantRegs = () => {
                 <div className="signUp-div">
                   {" "}
                   <MdOutlineFoodBank size={20} />
-                  <input placeholder="italian" className="input" />
+                  <input
+                    placeholder="italian"
+                    className="input"
+                    {...register("cuisineType")}
+                  />
                 </div>
               </div>
 
@@ -130,7 +173,12 @@ const RestaurantRegs = () => {
                 <div className="signUp-div">
                   {" "}
                   <CiTimer size={20} />
-                  <input placeholder="9:00am" className="input" type="time" />
+                  <input
+                    placeholder="9:00am"
+                    className="input"
+                    type="time"
+                    {...register("openingTime")}
+                  />
                 </div>
               </div>
 
@@ -139,11 +187,22 @@ const RestaurantRegs = () => {
                 <div className="signUp-div">
                   {" "}
                   <CiTimer size={20} />
-                  <input placeholder="12:00am" className="input" type="time" />
+                  <input
+                    placeholder="12:00am"
+                    className="input"
+                    type="time"
+                    {...register("closingTime")}
+                  />
                 </div>
               </div>
 
-              <Button className="w-full  ">To Register</Button>
+              <Button
+                className="w-full bg-orange hover:bg-orangeDark "
+                type="submit"
+                onClick={handleForm}
+              >
+                To Register
+              </Button>
             </form>
           </CardDescription>
         </CardContent>

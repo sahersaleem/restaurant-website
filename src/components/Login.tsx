@@ -8,6 +8,9 @@ import { FiUser } from "react-icons/fi";
 import { MdLock } from "react-icons/md";
 import { MdOutlineMail } from "react-icons/md";
 import { LuMapPin } from "react-icons/lu";
+import { useRouter } from "next/navigation";
+import Cookies from 'js-cookie'
+import axios from "axios";
 import {
   Card,
   CardContent,
@@ -17,14 +20,41 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "./ui/button";
+import Link from "next/link";
+
 
 const Login = () => {
   const { register, handleSubmit } = useForm<loginFormData>({
     resolver: zodResolver(loginSchema),
+    defaultValues:{
+      password:"",
+      email:""
+    }
   });
 
-  const handleForm = (data:loginFormData ) => {
-    console.log(data);
+  const router = useRouter()
+
+  const handleForm = async(data:any ) => {
+    console.log(data)
+    try {
+     const res = await axios.post('/api/login',data)
+
+     if(res){
+    Cookies.set('token',res.data.token , {expires:7})
+    console.log(res)
+    if(res.data.role=="owner"){
+      router.push('/dashboard')
+    }else{
+      router.push('/')
+    }
+       
+
+     }
+      
+    } catch (error:any) {
+      console.log("Error ocurred" , error.message)
+      
+    }
   };
 
   return (
@@ -45,6 +75,7 @@ const Login = () => {
                   <input
                     placeholder="johndoe281@gmail.com"
                     className="input"
+                    {...register("email")}
                   />
                 </div>
               </div>
@@ -57,6 +88,7 @@ const Login = () => {
                     placeholder="password"
                     type="password"
                     className="input"
+                    {...register("password")}
                   />
                 </div>
 
@@ -66,10 +98,11 @@ const Login = () => {
                 </p>
               </div>
 
-              <Button className="w-full  ">Login</Button>
+              <Button className="w-full bg-[#FF9F0D] hover:bg-[#eda232] " type="submit" onClick={handleForm}>Login</Button>
             </form>
           </CardDescription>
         </CardContent>
+        <CardFooter><Link href={'/lign'}></Link></CardFooter>
       </Card>
     </div>
   );
