@@ -10,7 +10,7 @@ const page = () => {
     <div className="bg-white  mt-10 w-full ">
       <h1 className="text-4xl text-center font-bold ">Restaurant Dashboard</h1>
       <div className="p-10 flex justify-between gap-10 flex-wrap">
-        <div className="max-w-[300px] bg-[#FFB200] hover:bg-[#FFB200]/90  transition-colors rounded-lg shadow-lg p-8 space-y-4">
+      <div className="max-w-[300px] bg-[#FFB200] rounded-lg shadow-lg p-8 space-y-4 hover:bg-[#FFB200]/90  transition-colors">
             <MdMenuBook size={50}/>
           <h3 className="text-lg">Upload Menu</h3>
         

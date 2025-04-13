@@ -1,20 +1,19 @@
 import { Schema, model, models } from "mongoose";
-
 const RestaurantSchema = new Schema(
   {
     restaurantName: { type: String, required: true },
     email: { type: String, required: true },
     address: { type: String, required: true },
-    cuisineType: { type: String, required: true },
+    cuisineType: { type: String, required: false },
 
     password: { type: String, required: true },
-    confirmPassword: { type: String, required: true },
-    pdfLinks:{type:String , required:false},
+    pdfLinks: { type: String , required: false},
 
-    description: { type: String },
-
-    openingTime: { type: String },
-    closingTime: { type: String },
+    description: { type: String , required: false},
+    phoneNumber: { type: String , required: false},
+    googlePage: { type: String , required: false},
+    website_link: { type: String , required: false},
+    logo: { type: String },
 
     owner: {
       type: Schema.Types.ObjectId,

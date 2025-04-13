@@ -29,7 +29,7 @@ export async function POST(request: Request) {
     const cloudinaryResult = await new Promise<any>((resolve, reject) => {
       cloudinary.v2.uploader
         .upload_stream(
-          { resource_type: "raw" }, // auto handles different file types
+          { resource_type: "image" }, // auto handles different file types
           (error, result) => {
             if (error) {
               reject(error);
@@ -46,7 +46,7 @@ export async function POST(request: Request) {
 
     console.log(link);
 
-    return NextResponse.json({ pdfUrl: link });
+    return NextResponse.json({ logoUrl: link });
   } catch (error: any) {
     // Return the error message in case of failure
     return NextResponse.json({ error: error.message }, { status: 500 });

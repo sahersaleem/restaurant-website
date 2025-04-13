@@ -65,7 +65,8 @@ const config: Config = {
 	
   	},
 	fontFamily:{
-		quickSand:"var('--font-quicksand')"
+		quickSand:"var('--font-quicksand')",
+		poppins:"var('--font-poppins')"
 	}
   },
   plugins: [require("tailwindcss-animate"),require("tw-elements/plugin.cjs")],

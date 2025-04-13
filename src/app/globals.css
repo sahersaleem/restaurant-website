@@ -1,3 +1,6 @@
+
+
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -73,7 +76,7 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-poppins;
   }
 }
 
@@ -83,7 +86,9 @@
 .input{
   @apply visited:outline-none hover:outline-none outline-none w-1/2
 }
-
+input{
+  @apply visited:outline-none hover:outline-none outline-none w-full bg-gray-100 
+}
 input[type="date"] {
   @apply flex justify-between items-center;
 }
@@ -93,5 +98,30 @@ input[type="date"] {
 }
 
 .homepage-btn{
-  @apply bg-gray-300 px-4 rounded-lg py-2 transition-all ease-linear
+  @apply bg-red px-4 rounded-lg py-2 transition-all ease-linear text-white
 }
+
+h2{
+  @apply tracking-wide text-sm mb-2 font-poppins
+}
+
+.rest-inform-para{
+  @apply text-lg bg-gray-100  rounded-lg flex items-center justify-between gap-x-4  px-6 py-2
+}
+
+/* HTML: <div class="loader"></div> */
+.loader {
+  width: 50px;
+  --b: 8px; 
+  aspect-ratio: 1;
+  border-radius: 50%;
+  padding: 1px;
+  background: conic-gradient(#0000 10%,#f03355) content-box;
+  mask:
+    repeating-conic-gradient(#0000 0deg,#000 1deg 20deg,#0000 21deg 36deg),
+    radial-gradient(farthest-side,#0000 calc(100% - var(--b) - 1px),#000 calc(100% - var(--b)));
+  -webkit-mask-composite: destination-in;
+          mask-composite: intersect;
+  animation:l4 1s infinite steps(10);
+}
+@keyframes l4 {to{transform: rotate(1turn)}}

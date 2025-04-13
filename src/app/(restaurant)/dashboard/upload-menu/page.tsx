@@ -1,13 +1,14 @@
 "use client";
 
 import Image from "next/image";
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useRestaurantContext } from "../../_components/RstaurantContext";
 import { FileUpload } from "@/components/ui/file-upload";
 import { LuLoader } from "react-icons/lu";
 import Link from "next/link";
 import { GrDocumentPdf, GrEdit } from "react-icons/gr";
+import { useRouter } from "next/navigation";
 
 const Page = () => {
   const [files, setFiles] = useState<File>();
@@ -16,6 +17,7 @@ const Page = () => {
   const { restaurantId } = useRestaurantContext();
   const [pdflink, setPdfLink] = useState<string>("");
   const [isEditing, setIsEditing] = useState<boolean>(false);
+  const router = useRouter()
 
   useEffect(() => {
     const getRestaurantPdfLink = async () => {
@@ -50,29 +52,30 @@ const Page = () => {
     if (files) {
       const formData = new FormData();
       formData.append("files", files);
-      
-      try {
 
+      try {
         const res = await axios.post("/api/restaurant/menu_upload", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
         });
-        // console.log(res);
-        if (res.data.pdfUrl) {
+        console.log(res);
+        if (res.data) {
           setPdfLinks(res.data.pdfUrl);
         }
+        console.log(pdfLinks)
         if (pdfLinks) {
           const pdfsData = { pdfLinks, restaurantId };
           console.log(pdfsData);
           try {
             setLoading(true);
-            
+
             const response = await axios.put(
               "/api/restaurant/upload_pdf_links",
               pdfsData
             );
-
+            // console.log(response);
+            router.refresh()
             setLoading(false);
           } catch (error: any) {
             console.log(error.message);
@@ -117,7 +120,7 @@ const Page = () => {
               )}
             </div>
           )}
-          {pdflink && isEditing ? (
+          {!pdflink || isEditing ? (
             <FileUpload
               name="files"
               placeholder="upload"
@@ -129,18 +132,19 @@ const Page = () => {
             ""
           )}
 
-         { !pdflink || isEditing?<button
-            onClick={uploadImages}
-            className={`button mt-9`}
-          >
-            {loading ? (
-              <LuLoader className="animate-spin" />
-            ) : isEditing ? (
-              "Save"
-            ) : (
-              "upload"
-            )}
-          </button>:""}
+          {!pdflink || isEditing ? (
+            <button onClick={uploadImages} className={`button mt-9`}>
+              {loading ? (
+                <LuLoader className="animate-spin" />
+              ) : isEditing ? (
+                "Save"
+              ) : (
+                "upload"
+              )}
+            </button>
+          ) : (
+            ""
+          )}
         </div>
 
         <Image src={"/images/menu.png"} width={600} height={600} alt="menu" />

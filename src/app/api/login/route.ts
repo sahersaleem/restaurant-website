@@ -1,5 +1,5 @@
 import dbConnect from "@/lib/db";
-import { NextRequest, NextResponse } from "next/server";
+import {  NextResponse } from "next/server";
 
 import bcrypt from "bcryptjs";
 import Jwt from "jsonwebtoken";

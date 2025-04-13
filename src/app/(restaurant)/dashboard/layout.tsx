@@ -8,7 +8,7 @@ export default function RootLayout({
 }>) {
   return (
     <RestaurntContextProvider>
-      <div className="w-full flex flex-row ">
+      <div className="w-full flex flex-row h-auto ">
         <Dashboard />
         {children}
       </div>

@@ -12,14 +12,6 @@ export const restaurantDashboardLinks = [
     href: "/dashboard/profile",
   },
   {
-    label: "Location Settings",
-    href: "/dashboard/location",
-  },
-  {
-    label: "Analytics",
-    href: "/dashboard/analytics",
-  },
-  {
     label: "Subscription",
     href: "/dashboard/subscription",
   },

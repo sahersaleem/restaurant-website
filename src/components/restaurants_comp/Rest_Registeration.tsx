@@ -1,62 +1,61 @@
 "use client";
 
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import {
   RestaurantRegisterationData,
   RestaurantRegisterationSchema,
 } from "@/schemas/restaurantLoginSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { MdOutlineDateRange } from "react-icons/md";
-import { FiUser } from "react-icons/fi";
 import { MdLock } from "react-icons/md";
 import { MdOutlineMail } from "react-icons/md";
-import { LuMapPin } from "react-icons/lu";
+import { LuLoader} from "react-icons/lu";
 import { GrRestaurant } from "react-icons/gr";
-import { MdOutlinePhone } from "react-icons/md";
-import { MdOutlineFoodBank } from "react-icons/md";
-import { CiTimer } from "react-icons/ci";
+
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "../ui/button";
-import Link from "next/link";
 import axios from "axios";
 import { useRestaurantContext } from "@/app/(restaurant)/_components/RstaurantContext";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 const RestaurantRegs = () => {
   const { addRestaurantId } = useRestaurantContext();
   const { register, handleSubmit } = useForm<RestaurantRegisterationData>({
     resolver: zodResolver(RestaurantRegisterationSchema),
     defaultValues: {
       restaurantName: "",
+      address:"",
       email: "",
       password: "",
-      confirmPassword: "",
-      address: "",
-      PhoneNumber: "",
-      description: "",
-      openingTime: "",
-      closingTime: "",
-      cuisineType: "",
     },
   });
-
+const [loading , setloading] = useState<boolean>(false)
+const router = useRouter()
   const handleForm = async (data: any) => {
-    console.log(data);
+    console.log(data)
     try {
+ 
+      setloading(true)
       const res = await axios.post("/api/restaurant/create_account", data);
       console.log(res)
-      console.log(res.data.rest._id)
+
       if (res) {
         addRestaurantId(res.data.rest._id);
-
+        setloading(false)
+        router.push('/login')
+      
       }
     } catch (error: any) {
       console.log(error);
+      setloading(false)
+    }
+    finally{
+      setloading(false)
     }
   };
 
@@ -110,88 +109,16 @@ const RestaurantRegs = () => {
                   />
                 </div>
               </div>
-
               <div>
-                <label className="font-semibold">Confirm Password</label>
+                <label className="font-semibold">Address</label>
                 <div className="signUp-div">
                   {" "}
                   <MdLock size={20} />
                   <input
-                    placeholder="confirm password"
-                    type="password"
-                    className="input"
-                    {...register("confirmPassword")}
-                  />
-                </div>
-
-                <p className="text-xs mt-2 mb-6">
-                  The password must contain at least 6 characters, one uppercase
-                  letter and one special character.
-                </p>
-              </div>
-
-              <div>
-                <label className="font-semibold">Phone Number</label>
-                <div className="signUp-div">
-                  {" "}
-                  <MdOutlinePhone size={20} />
-                  <input
-                    placeholder="021...."
-                    className="input"
-                    {...register("PhoneNumber")}
-                  />
-                </div>
-              </div>
-              <div>
-                <label className="font-semibold">Location</label>
-                <div className="signUp-div">
-                  {" "}
-                  <LuMapPin size={20} />
-                  <input
-                    placeholder="abc streer"
+                    placeholder="address"
+                    type="address"
                     className="input"
                     {...register("address")}
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="font-semibold">Cuisine type</label>
-                <div className="signUp-div">
-                  {" "}
-                  <MdOutlineFoodBank size={20} />
-                  <input
-                    placeholder="italian"
-                    className="input"
-                    {...register("cuisineType")}
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="font-semibold">Opening time</label>
-                <div className="signUp-div">
-                  {" "}
-                  <CiTimer size={20} />
-                  <input
-                    placeholder="9:00am"
-                    className="input"
-                    type="time"
-                    {...register("openingTime")}
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="font-semibold">Closing time</label>
-                <div className="signUp-div">
-                  {" "}
-                  <CiTimer size={20} />
-                  <input
-                    placeholder="12:00am"
-                    className="input"
-                    type="time"
-                    {...register("closingTime")}
                   />
                 </div>
               </div>
@@ -199,9 +126,9 @@ const RestaurantRegs = () => {
               <Button
                 className="w-full bg-orange hover:bg-orangeDark "
                 type="submit"
-                onClick={handleForm}
+                onSubmit={handleForm}
               >
-                To Register
+               {loading ? <LuLoader size={30} className="animate-spin"/> : "To Register"}
               </Button>
             </form>
           </CardDescription>
