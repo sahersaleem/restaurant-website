@@ -8,6 +8,8 @@ import { FiUser } from "react-icons/fi";
 import { MdLock } from "react-icons/md";
 import { MdOutlineMail } from "react-icons/md";
 import { LuMapPin } from "react-icons/lu";
+import {useRouter } from 'next/navigation'
+
 import {
   Card,
   CardContent,
@@ -22,39 +24,49 @@ import Link from "next/link";
 import axios from "axios";
 
 const SignUp = () => {
-  const { register, handleSubmit} = useForm<signUpformData>({
+  const { register, handleSubmit } = useForm<signUpformData>({
     resolver: zodResolver(signUpSchema),
-    defaultValues:{
-      name:"",
-      date_of_birth:"",
-      email:"",
-      password:"",
-      town:"",
-      forename:""
-    }
+    defaultValues: {
+      name: "",
+      date_of_birth: "",
+      email: "",
+      password: "",
+      town: "",
+      forename: "",
+    },
   });
 
-  const handleForm = async(data:any) => {
-    try {
-   const res = await axios.post('/api/signUp',data)
-   if(res){
-     console.log(res)
-   }
+  const router = useRouter()
 
-    } catch (error)
-     {
-      console.log(error)
+  const handleForm = async (data: any) => {
+    try {
+      const res = await axios.post("/api/signUp", data);
+      if (res) {
+     router.push('/login')
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
   return (
-    <div className="w-full h-screen flex justify-center items-center ">
-      <Card className="max-w-[450px] ">
+    <div className="w-full h-auto flex justify-center items-center mt-20 pb-10 ">
+      <Card className="max-w-[500px] ">
         <CardContent>
           <CardHeader className="flex items-center justify-center">
-            <CardTitle className="text-2xl">Registration</CardTitle>
-            <div className="flex items-center justify-center gap-x-2"> 
-            <h2 className="text-sm">Create your account</h2><Link href={'/restaurant'} className="text-xs underline text-blue-800 ">want to register your restaurant?</Link></div>
+            <CardTitle className="text-2xl  sm:text-5xl font-comic tracking-wide  after:content-[''] after:block after:w-[70%] after:h-[3px] sm:after:h-[6px]  after:bg-red sm:after:mt-2 after:rounded-lg after:mt-1">
+              Sign Up
+            </CardTitle>
+          
+            
+
+              <Link
+                href={"/restaurant"}
+                className="text-sm underline text-red capitalize font-comic font-medium"
+              >
+                want to register your restaurant?
+              </Link>
+        
           </CardHeader>
           <CardDescription>
             <form onSubmit={handleSubmit(handleForm)} className="space-y-4">
@@ -64,14 +76,22 @@ const SignUp = () => {
                   <div className="signUp-div">
                     {" "}
                     <FiUser size={20} />{" "}
-                    <input {...register("name")} className="input" placeholder="John" />
+                    <input
+                      {...register("name")}
+                      className="input"
+                      placeholder="John"
+                    />
                   </div>
                 </div>
                 <div>
                   <label className="font-semibold">Forename</label>
                   <div className="signUp-div">
                     <FiUser size={20} />
-                    <input {...register("forename")} className="input" placeholder="Doe" />
+                    <input
+                      {...register("forename")}
+                      className="input"
+                      placeholder="Doe"
+                    />
                   </div>
                 </div>
               </div>
@@ -80,17 +100,24 @@ const SignUp = () => {
                 <label className="font-semibold">Town</label>
                 <div className="signUp-div">
                   <LuMapPin size={20} />
-                  <input placeholder="Saint-Pieere" className="input"    {...register("town")}/>
+                  <input
+                    placeholder="Saint-Pieere"
+                    className="input"
+                    {...register("town")}
+                  />
                 </div>
-                
               </div>
               <div>
                 <label className="font-semibold">Date of birth</label>
                 <div className="signUp-div">
                   <MdOutlineDateRange size={20} />
-                  <input placeholder="Saint-Pieere" className="input" type="date" {...register("date_of_birth")} />
+                  <input
+                    placeholder="Saint-Pieere"
+                    className="input"
+                    type="date"
+                    {...register("date_of_birth")}
+                  />
                 </div>
-                
               </div>
               <div>
                 <label className="font-semibold">Email Adress</label>
@@ -123,7 +150,13 @@ const SignUp = () => {
                 </p>
               </div>
 
-              <Button className="w-full bg-orange hover:bg-orangeDark " type="submit" onClick={handleForm}>To Register</Button>
+              <Button
+                className="w-full bg-red "
+                type="submit"
+                onClick={handleForm}
+              >
+                To Register
+              </Button>
             </form>
           </CardDescription>
         </CardContent>

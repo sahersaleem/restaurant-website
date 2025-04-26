@@ -29,7 +29,7 @@ export async function POST(request: Request) {
     const cloudinaryResult = await new Promise<any>((resolve, reject) => {
       cloudinary.v2.uploader
         .upload_stream(
-          { resource_type: "raw" }, // auto handles different file types
+          { resource_type: "auto" , format:"pdf"}, // auto handles different file types
           (error, result) => {
             if (error) {
               reject(error);

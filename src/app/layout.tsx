@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import {Quicksand} from "next/font/google"
+import { Cherry_Swash, Comic_Neue, Quicksand } from "next/font/google";
 import "./globals.css";
 import { Poppins } from "next/font/google";
+import { Chewy, Comfortaa } from "next/font/google";
+import NextTopLoader from 'nextjs-toploader';
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -15,14 +17,12 @@ const geistMono = localFont({
   weight: "100 900",
 });
 
-
 const geistQuickSand = Quicksand({
-  weight:["300","400","500","600" , "700"],
-  display:"swap",
-  variable:"--font-quicksand",
-  subsets:['latin']
-})
-
+  weight: ["300", "400", "500", "600", "700"],
+  display: "swap",
+  variable: "--font-quicksand",
+  subsets: ["latin"],
+});
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -31,22 +31,19 @@ const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800"],
 });
 
+const chew = Chewy({
+  subsets: ["latin"],
+  variable: "--font-chew",
+  display: "swap",
+  weight: ["400"],
+});
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+const comic = Comfortaa({
+  subsets: ["latin"],
+  variable: "--font-comic",
+  display: "swap",
+  weight: ["400"],
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -61,8 +58,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${geistQuickSand.variable} ${poppins.variable} antialiased`}
+        className={`${poppins.variable} ${chew.variable}  ${comic.variable}  antialiased overflow-x-hidden`}
       >
+        <NextTopLoader />
         {children}
       </body>
     </html>

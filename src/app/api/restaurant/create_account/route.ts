@@ -21,6 +21,8 @@ export async function POST(request: Request) {
     });
 
     const save_user = await user.save();
+    console.log(save_user);
+    
 
     const rest = await Restaurant.create({
       restaurantName,
@@ -32,6 +34,8 @@ export async function POST(request: Request) {
     });
 
     const save_restaurnt = await rest.save();
+    console.log(save_restaurnt);
+    
 
 
     return NextResponse.json({ rest: save_restaurnt, user: save_user });

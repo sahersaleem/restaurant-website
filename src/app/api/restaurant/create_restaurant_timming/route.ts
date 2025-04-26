@@ -7,12 +7,12 @@ export async function POST(request: NextRequest) {
     await dbConnect();
     const restaurantId = request.nextUrl.searchParams.get("id");
 
-    const { restaurantTimings } = await request.json();
-
-    for (const timing of restaurantTimings) {
+    const { timings } = await request.json();
+   console.log(timings)
+    for (const timing of timings) {
       const createRestaurantTimings = await Timing.create({
-        restaurants: restaurantId,
-        days: timing.days,
+        restaurant: restaurantId,
+        days: timing.day,
         slots: timing.slots,
       });
 
@@ -26,5 +26,26 @@ export async function POST(request: NextRequest) {
     console.log(error);
 
     return NextResponse.json({ error });
+  }
+}
+
+
+
+export async function GET(request:NextRequest){
+  try {
+    await dbConnect()
+    const restaurantId = request.nextUrl.searchParams.get("id");
+    const restaurantTimingsFindById = await Timing.find({restaurant:restaurantId})
+    
+    if(!restaurantTimingsFindById){
+      return NextResponse.json({message:"No timing present of this restaurant"})
+    }
+     
+    return NextResponse.json({restaurantTimingsFindById})
+
+
+  } catch (error:any) {
+
+    return NextResponse.json({message:error.message})
   }
 }

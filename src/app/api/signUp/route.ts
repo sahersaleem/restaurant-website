@@ -28,7 +28,7 @@ export async function POST(request: Request) {
     });
 
     const save_User = await user.save();
-    user_login.save();
+    await user_login.save();
 
     return NextResponse.json({ save_User });
   } catch (error: any) {

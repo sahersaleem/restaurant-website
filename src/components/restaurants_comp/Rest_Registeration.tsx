@@ -23,6 +23,7 @@ import axios from "axios";
 import { useRestaurantContext } from "@/app/(restaurant)/_components/RstaurantContext";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 const RestaurantRegs = () => {
   const { addRestaurantId } = useRestaurantContext();
   const { register, handleSubmit } = useForm<RestaurantRegisterationData>({
@@ -45,6 +46,7 @@ const router = useRouter()
       console.log(res)
 
       if (res) {
+        console.log(res)
         addRestaurantId(res.data.rest._id);
         setloading(false)
         router.push('/login')
@@ -60,14 +62,14 @@ const router = useRouter()
   };
 
   return (
-    <div className="w-full h-auto flex justify-center items-center p-20 ">
-      <Card className="max-w-[450px]   ">
+    <div className="w-full h-auto flex justify-center items-center p-6 lg:p-20  font-poppins">
+      <Card className="max-w-[500px] w-full ">
         <CardContent>
-          <CardHeader className="flex items-center justify-center">
-            <CardTitle className="text-2xl">Register your restaurant</CardTitle>
-            <div className="flex items-center justify-center gap-x-2">
-              <h2 className="text-sm">Create your restaurant account here!</h2>
-            </div>
+          <CardHeader className="flex items-center justify-center f">
+            <Image src={'/images/shef.png'} width={60} height={60} alt="restaurant"/>
+            <CardTitle className="text-sm lg:text-3xl font-comic tracking-wide">
+              Register Your Restauarnt  
+            </CardTitle>
           </CardHeader>
           <CardDescription>
             <form onSubmit={handleSubmit(handleForm)} className="space-y-4">
@@ -124,7 +126,7 @@ const router = useRouter()
               </div>
 
               <Button
-                className="w-full bg-orange hover:bg-orangeDark "
+                className="w-full bg-red font-comic text-lg  "
                 type="submit"
                 onSubmit={handleForm}
               >

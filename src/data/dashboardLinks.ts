@@ -21,3 +21,36 @@ export const restaurantDashboardLinks = [
   },
 ];
   
+
+export const admin_dashboard_links = [
+
+
+  {
+    label: "Users",
+    href: "/admin/dashboard/user_management", 
+  },{
+    label: "Restaurants",
+    href: "/admin/dashboard/restaurant_management",
+  },
+  {
+    label: "Advertisement",
+    href: "/admin/dashboard/advertisement_management",
+  }, {
+    label: "Featured",
+    href: "/admin/dashboard/featured_restaurant",
+  }
+]
+
+
+
+
+export const moderator_dashboard_links = [
+{
+    label: "Restaurant management",
+    href: "/moderator/dashboard/restaurant_management",
+  },
+  {
+    label: "Complaint management",
+    href: "/moderator/dashboard/complaint_management",
+  }
+]

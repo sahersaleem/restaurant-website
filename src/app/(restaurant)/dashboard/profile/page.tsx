@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 import { LuLoader } from "react-icons/lu";
 import { TimingSlot } from "@/types/types";
 import Loader from "@/components/landingPageComponent/Loader";
+import { Slot } from "@radix-ui/react-slot";
 const Page = () => {
   const { restaurantId } = useRestaurantContext();
   const [restaurantInforamtion, setRestaurantInformation] =
@@ -35,6 +36,10 @@ const Page = () => {
   const [timings, setTimings] = useState<TimingSlot[]>([
     { day: "", slots: [""] },
   ]);
+
+  const [restaurantTimingData, setRestaurantTimingData] =
+    useState<TimingSlot[]>();
+
   const [loadingData, setLoadingData] = useState<boolean>(true);
   const router = useRouter();
 
@@ -72,6 +77,18 @@ const Page = () => {
           setLoadingData(false);
           return;
         }
+
+        const getTimingsOfRestaurant = await axios.get(
+          `/api/restaurant/create_restaurant_timming?id=${restaurantId}`
+        );
+
+        if (getTimingsOfRestaurant.data) {
+          console.log(getTimingsOfRestaurant.data.restaurantTimingsFindById);
+          setRestaurantTimingData(
+            getTimingsOfRestaurant.data.restaurantTimingsFindById
+          );
+        }
+
         const res = await axios.get(
           `/api/restaurant/get_restaurants?id=${restaurantId}`
         );
@@ -79,7 +96,7 @@ const Page = () => {
         if (res.data) {
           const restaurant = res.data.findRestaurantById;
           setRestaurantInformation(res.data.findRestaurantById);
-         console.log(restaurant)
+          console.log(restaurant);
           setFormState({
             restaurantName: restaurant?.restaurantName || "",
             address: restaurant?.address || "",
@@ -118,34 +135,21 @@ const Page = () => {
 
   const handleSave = async () => {
     try {
-      setLoading(true);    
-
+      setLoading(true);
 
       try {
-         const restaurantTimings = {timings}
         const timingRequest = await axios.post(
           `/api/restaurant/create_restaurant_timming?id=${restaurantId}`,
-          restaurantTimings
+          { timings }
         );
 
-        console.log(timingRequest)
-  
-      } catch (error:any) {
-        console.log("Error occur while creating timming of Request" , error.message)
+        console.log(timingRequest);
+      } catch (error: any) {
+        console.log(
+          "Error occur while creating timming of Request",
+          error.message
+        );
       }
-     
-
-
-
-
-
-
-
-
-
-
-
-
 
       const res = await axios.put(
         `/api/restaurant/get_restaurants?id=${restaurantId}`,
@@ -228,7 +232,7 @@ const Page = () => {
   }, [logoLink]);
 
   return (
-    <div className="bg-white  mt-10 w-full  flex  items-center flex-col h-screen font-poppins ">
+    <div className="bg-white  mt-10 w-full  flex  items-center flex-col h-auto font-poppins min-h-screen pb-20 ">
       {loadingData ? (
         <div className="w-full h-screen flex justify-center items-center">
           <Loader />
@@ -394,6 +398,31 @@ const Page = () => {
 
                   <div>
                     <h2 className="">Restaurant Opening Timings</h2>
+
+                    {!isEditing && restaurantTimingData ? (
+                      <div className="text-lg bg-gray-100  rounded-lg flex flex-col">
+                         
+                    {
+                      restaurantTimingData.map((timings , index)=>(
+                        <div key={index} className="flex justify-between items-center px-6 py-2
+}">
+                          <p>{timings.days}</p>
+                         <div>{timings.slots[0]} to {timings.slots[1]}</div>
+                        </div>
+                      ))
+                    }
+
+
+
+
+
+
+
+                      </div>
+                    ) : (
+                      <div></div>
+                    )}
+
                     {isEditing
                       ? timings.map((timing, dayIndex) => (
                           <div key={dayIndex} className="flex flex-col gap-y-4">
@@ -432,12 +461,14 @@ const Page = () => {
                           </div>
                         ))
                       : ""}
-                    <button
-                      onClick={() => handleAddDay()}
-                      className="text-sm text-blue-500 underline"
-                    >
-                      + Add Day
-                    </button>
+                    {isEditing && (
+                      <button
+                        onClick={() => handleAddDay()}
+                        className="text-sm text-blue-500 underline"
+                      >
+                        + Add Day
+                      </button>
+                    )}
                   </div>
                 </>
               )}

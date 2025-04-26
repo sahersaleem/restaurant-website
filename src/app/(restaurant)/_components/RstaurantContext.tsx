@@ -20,14 +20,14 @@ export const RestaurntContextProvider = ({
 
   useEffect(() => {
     if(restaurantId!==undefined){
-      const id = JSON.parse(window.localStorage.getItem("restaurantId") || "");
+      const id = JSON.parse(window.localStorage.getItem("restaurantId")!) ;
       if (id) {
         setRestaurantId(id);
       }
     }
  
     
-  }, []);
+  }, [restaurantId]);
 
   useEffect(() => {
    

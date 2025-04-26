@@ -13,10 +13,10 @@ const config: Config = {
   		colors: {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
-			orange:'#FFC107',
-			orangeDark:"#eda232",
+			orange:'#E2CB30',
+			orangeDark:"#E2CB30",
 			bgBlack:'#0D0D0DF2',
-			red:'#e02b30',
+			red:'#DA3255',
 	
   			card: {
   				DEFAULT: 'hsl(var(--card))',
@@ -64,10 +64,14 @@ const config: Config = {
   		},
 	
   	},
-	fontFamily:{
-		quickSand:"var('--font-quicksand')",
-		poppins:"var('--font-poppins')"
-	}
+	  fontFamily: {
+		quickSand: ['var(--font-quicksand)'],
+		poppins: ['var(--font-poppins)'],
+		chew: ['var(--font-chew)'],
+	    comic: ['var(--font-comic)'],
+		geistSans: ['var(--font-geist-sans)'],
+		geistMono: ['var(--font-geist-mono)'],
+	  }
   },
   plugins: [require("tailwindcss-animate"),require("tw-elements/plugin.cjs")],
 };

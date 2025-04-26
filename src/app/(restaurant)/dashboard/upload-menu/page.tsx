@@ -9,41 +9,41 @@ import { LuLoader } from "react-icons/lu";
 import Link from "next/link";
 import { GrDocumentPdf, GrEdit } from "react-icons/gr";
 import { useRouter } from "next/navigation";
+import { Toaster, toast } from "react-hot-toast";
 
 const Page = () => {
-  const [files, setFiles] = useState<File>();
+  const [files, setFiles] = useState<File|null>();
   const [pdfLinks, setPdfLinks] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const { restaurantId } = useRestaurantContext();
   const [pdflink, setPdfLink] = useState<string>("");
   const [isEditing, setIsEditing] = useState<boolean>(false);
-  const router = useRouter()
+  const router = useRouter();
 
-  useEffect(() => {
-    const getRestaurantPdfLink = async () => {
-      try {
-        if (!restaurantId) {
-          return;
-        }
-        const res = await axios.get(
-          `/api/restaurant/get_restaurants?id=${restaurantId}`
-        );
-
-        if (res.data.findRestaurantById.pdfLinks) {
-          setPdfLink(res.data.findRestaurantById.pdfLinks);
-        } else {
-          console.log("not found");
-        }
-      } catch (error: any) {
-        console.log("error occurr while fetching", error.message);
+  const getRestaurantPdfLink = async () => {
+    try {
+      if (!restaurantId) {
+        return;
       }
-    };
+      const res = await axios.get(
+        `/api/restaurant/get_restaurants?id=${restaurantId}`
+      );
 
+      if (res.data.findRestaurantById.pdfLinks) {
+        setPdfLink(res.data.findRestaurantById.pdfLinks);
+      } else {
+        console.log("not found");
+      }
+    } catch (error: any) {
+      console.log("error occurr while fetching", error.message);
+    }
+  };
+  useEffect(() => {
     getRestaurantPdfLink();
   }, [restaurantId]);
 
   const handleFiles = (e: File[]) => {
-    if (e) {
+    if (e && e[0]) {
       setFiles(e[0]);
     }
   };
@@ -59,30 +59,28 @@ const Page = () => {
             "Content-Type": "multipart/form-data",
           },
         });
-        console.log(res);
-        if (res.data) {
-          setPdfLinks(res.data.pdfUrl);
-        }
-        console.log(pdfLinks)
-        if (pdfLinks) {
-          const pdfsData = { pdfLinks, restaurantId };
-          console.log(pdfsData);
-          try {
-            setLoading(true);
+       
+        const uploaded_url = res.data;
+        console.log(uploaded_url)
+        if (uploaded_url) {
+          const pdfsData = { pdfLinks: uploaded_url, restaurantId };
 
-            const response = await axios.put(
-              "/api/restaurant/upload_pdf_links",
-              pdfsData
-            );
-            // console.log(response);
-            router.refresh()
-            setLoading(false);
-          } catch (error: any) {
-            console.log(error.message);
-          }
+          setLoading(true);
+
+          const response = await axios.put(
+            "/api/restaurant/upload_pdf_links",
+            pdfsData
+          );
+          console.log(response);
+          toast.success("Menu uploaded successfully");
+          await getRestaurantPdfLink();
+          setFiles(null)
+          setLoading(false);
+          setIsEditing(false)
+        
         }
       } catch (error: any) {
-        console.log(error.message);
+       toast.error("UPload failed")
       }
     }
   };
@@ -100,9 +98,9 @@ const Page = () => {
             Easily upload your restaurant’s menu in PDF format so customers can
             view or download it.
           </p>
-          {pdflink && (
+          {pdflink && !isEditing && (
             <div className="bg-gray-200 p-4 rounded-lg mt-10 flex justify-between items-center">
-              {pdflink ? (
+              {pdflink?  (
                 <>
                   <Link
                     href={pdflink}
