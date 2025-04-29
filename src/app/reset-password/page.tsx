@@ -10,6 +10,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Suspense } from "react";
 import { useState } from "react";
 import { Loader } from "lucide-react";
 import { MdOutlineMail } from "react-icons/md";
@@ -36,7 +37,8 @@ const Reset_password = () => {
   };
 
   return (
-    <div className="w-full h-screen flex justify-center items-center  p-6 lg:p-0">
+    <Suspense fallback={<div>Loading...</div>}>
+   <div className="w-full h-screen flex justify-center items-center  p-6 lg:p-0">
             <Toaster position="bottom-right" reverseOrder={false} />
       <Card className="max-w-[500px] ">
         <CardContent>
@@ -81,6 +83,8 @@ const Reset_password = () => {
         <CardFooter></CardFooter>
       </Card>
     </div>
+  </Suspense>
+ 
   );
 };
 
