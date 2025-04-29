@@ -4,7 +4,7 @@ import React from "react";
 
 const Hero = () => {
   return (
-    <div className=" mt-20  lg:-mt-20 w-full flex justify-center lg:justify-between items-center flex-col lg:flex-row px-10 lg:px-0  gap-y-10  lg:pb-0 h-screen  bg-[#18171C] lg:bg-transparent">
+    <div className=" mt-16  lg:-mt-20 w-full flex justify-center lg:justify-between items-center flex-col lg:flex-row px-10 lg:px-0  gap-y-10  lg:pb-0 h-screen  bg-[#18171C] lg:bg-transparent">
       <div className="w-full">
         <h2 className="text-[#DA3255] font-chew tracking-wide text-2xl lg:text-3xl">
           Faim ? Réglons ça.
