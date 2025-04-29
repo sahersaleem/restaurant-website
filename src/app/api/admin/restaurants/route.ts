@@ -9,7 +9,7 @@ export async function GET() {
   try {
     await dbConnect();
 
-    const restaurant = await Restaurant.find({status:"approved"}).sort({ isFeatured: -1 });
+    const restaurant = await Restaurant.find();
      
     if (!restaurant) {
       return NextResponse.json({ message: "restaurant not found", status: "404" });

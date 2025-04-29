@@ -1,25 +1,58 @@
 "use client";
 
 import Image from "next/image";
-import React from "react";
-import { admin_dashboard_links} from "@/data/dashboardLinks";
+import React, { useState } from "react";
+import { admin_dashboard_links } from "@/data/dashboardLinks";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { FaBars } from "react-icons/fa6";
 
 const Admin_Dashboard = () => {
   const path = usePathname();
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
   return (
-    <div className="h-auto lg:w-[400px] bg-gray-100  ">
-      <Image src={"/images/logo.png"} width={180} height={100} alt="logo" />
-      <div className="flex flex-col  px-10 py-12 gap-y-6 items-start justify-center">
+    <div
+      className={` fixed lg:relative h-screen bg-gray-100 shadow-lg z-50 transition-all duration-300
+      ${isOpen ? "w-64 fixed " : "w-16 relative"} lg:w-72 px-4 py-6`}
+    >
+      {/* Top Logo and Button */}
+      <div className="flex items-center justify-between">
+        <Image
+          src="/images/logo.png"
+          width={180}
+          height={100}
+          alt="Logo"
+          className={`transition-all duration-300 ${
+            isOpen ? "w-32 h-24" : "w-0 h-0"
+          } lg:w-[120px] lg:h-[120px]`}
+        />
+        {/* Toggle Button only on small screens */}
+        <FaBars
+          className="text-2xl cursor-pointer lg:hidden"
+          onClick={() => setIsOpen(!isOpen)}
+        />
+      </div>
+
+      {/* Sidebar Links */}
+      <div
+        className={`flex flex-col mt-10 gap-4 transition-all duration-300
+      ${
+        isOpen
+          ? "opacity-100 visible"
+          : "opacity-0 invisible lg:opacity-100 lg:visible"
+      }`}
+      >
         {admin_dashboard_links.map((item, i) => (
           <Link
             href={item.href}
             key={i}
-            className={`text-lg hover:bg-red w-full transition-all px-4 hover:rounded-lg py-1 text-black hover:text-white border-b-2 border-red/20 hover:border-red  active:bg-red  ${
-              path == item.href
-                ? "bg-red rounded-lg border-none text-white"
-                : ""
+            onClick={() => setIsOpen(!isOpen)}
+            className={`text-base font-medium w-full px-4 py-2 rounded-md transition-all
+            ${
+              path === item.href
+                ? "bg-red text-white"
+                : "text-black hover:bg-red hover:text-white"
             }`}
           >
             {item.label}
@@ -30,4 +63,4 @@ const Admin_Dashboard = () => {
   );
 };
 
-export default Admin_Dashboard ;
+export default Admin_Dashboard;

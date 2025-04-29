@@ -4,24 +4,26 @@ export interface TimingSlot {
 }
 
 export interface IRestaurant {
-  restaurantName: string;
-  address: string;
-  password: string;
-  _id: string;
-  confirmPassword: string;
-  description: string;
+  restaurantName?: string;
+  address?: string;
+  password?: string;
+  _id?: string;
+  confirmPassword?: string;
+  thumbnail?:string,
+  description?: string;
   timings?: {
-    days: string;
+    day?: string;
     slots: string[];
   }[];
-  phoneNumber: string;
-  googlePage: string;
-  website_link: string;
-  cuisineType: string;
-  logo: string;
-  role: "Owner";
-  status: "pending" | "approved"|"reject",
-  pdfLinks:string
+  phoneNumber?: string;
+  googlePage?: string;
+  website_link?: string;
+  cuisineType?: string;
+  logo?: string;
+  role?: "Owner";
+  status?: "pending" | "approved"|"reject",
+  pdfLinks?:string
+  isFeatured?:boolean
 }
 
 export interface IUsers {

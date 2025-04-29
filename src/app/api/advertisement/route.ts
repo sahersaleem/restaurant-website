@@ -8,12 +8,11 @@ export async function POST(request: NextRequest) {
 
     const { title, imageLink, link } = await request.json();
 
-    console.log(title , imageLink , link);
-    
+    console.log(title, imageLink, link);
 
     const newAdd = await new Ad({
       title,
-      imageUrl:imageLink,
+      imageUrl: imageLink,
       link,
     });
 
@@ -37,7 +36,7 @@ export async function GET() {
     }
 
     return NextResponse.json({ ads });
-  } catch (error:any) {
+  } catch (error: any) {
     return NextResponse.json({ message: "Error occcurr while fetchind data." });
   }
 }
@@ -45,13 +44,14 @@ export async function GET() {
 export async function DELETE(request: NextRequest) {
   try {
     await dbConnect();
-     const userId = request.nextUrl.searchParams.get("id");
-   
-   const ad = await Ad.findByIdAndDelete(userId)
+    const userId = request.nextUrl.searchParams.get("id");
 
-   return NextResponse.json({message:"ad deleted succesffuly" , status:200})
- 
+    const ad = await Ad.findByIdAndDelete(userId);
 
+    return NextResponse.json({
+      message: "ad deleted succesffuly",
+      status: 200,
+    });
   } catch (error: any) {
     return NextResponse.json({
       message: "Error occurr while deleting ad from data base",
@@ -63,20 +63,13 @@ export async function PUT(request: NextRequest) {
   try {
     await dbConnect();
 
-    const { _id , imageUrl , link , title } = await request.json();
+    const { _id, imageLink, link, title } = await request.json();
 
-    const ad= await Ad.findByIdAndUpdate(
-       _id,
-      { 
-
-       imageUrl,
-       link,
-       title
-
-       }
-    );
-
-    await ad.save();
+    const ad = await Ad.findByIdAndUpdate(_id, {
+      imageUrl: imageLink,
+      link,
+      title,
+    });
 
     return NextResponse.json({ status: 400 });
   } catch (error: any) {
@@ -84,5 +77,4 @@ export async function PUT(request: NextRequest) {
       message: "Error occurr while fetching data from data base",
     });
   }
-
 }

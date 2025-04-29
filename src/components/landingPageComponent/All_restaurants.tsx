@@ -5,15 +5,20 @@ import axios from "axios";
 import { IRestaurant } from "@/types/types";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { HeartIcon, SearchIcon } from "lucide-react";
+import { Heart, HeartIcon, SearchIcon } from "lucide-react";
 import Link from "next/link";
 import Loader from "./Loader";
 import { Input } from "../ui/input";
-
+import { useCart } from "./CartContext";
+import { FaHeart } from "react-icons/fa";
+import { Toaster } from "react-hot-toast";
+import { SlBadge } from "react-icons/sl";
+import {motion} from "framer-motion"
 const All_restaurants = () => {
   const [data, setData] = useState<IRestaurant[]>();
   const [loading, setLoading] = useState<boolean>(false);
   const [searchTerm, setSearchTerm] = useState<string>("");
+
   useEffect(() => {
     const getALLRestaurants = async () => {
       try {
@@ -33,6 +38,8 @@ const All_restaurants = () => {
     getALLRestaurants();
   }, []);
 
+  const { wishList, addProduct } = useCart();
+
   const filteredRestaurant = data?.filter((item) => {
     const term = searchTerm.toLowerCase();
 
@@ -47,97 +54,156 @@ const All_restaurants = () => {
   });
 
   return (
-    <div className="mt-36 h-screen">
-      <h1 className="text-4xl  text-center font-semibold font-poppins">
-        Top Picks of the Week
-      </h1>
-      <div className="w-full items-center justify-center flex mt-10">
-        <div className="flex items-center justify-center gap-x-4 border border-black px-4 py-2 rounded-lg w-1/2 ">
-          {" "}
-          <input
-            placeholder="Search restaurant by cuisine , restaurant name and location ..."
-            className=" outline-none active:outline-none visited:outline-none !bg-transparent font-comic "
-            value={searchTerm}
-            onChange={(e) => {
-              setSearchTerm(e.target.value);
-            }}
-          />
-          <SearchIcon className="text-red font-bold" size={30} />
-        </div>
+    <div className="h-auto pb-10 lg:pb-0 lg:h-screen mt-10 lg:mt-0" id="all_restaurants">
+    <Toaster position="bottom-right" reverseOrder={false} />
+    
+    {/* Heading Animation */}
+    <motion.h1 
+      className="text-4xl text-center font-semibold font-comic"
+      initial={{ opacity: 0, y: -50 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+    >
+      Top Picks of the Week
+    </motion.h1>
+
+    {/* Search Bar Animation */}
+    <motion.div 
+      className="w-full flex items-center justify-center mt-10"
+      initial={{ opacity: 0, y: -30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.7 }}
+    >
+      <div className="flex items-center justify-center gap-x-4 border border-black px-4 py-2 rounded-lg w-1/2">
+        <input
+          placeholder="Search restaurant by cuisine, restaurant name and location..."
+          className="outline-none bg-transparent font-comic w-full"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+        <SearchIcon className="text-red font-bold" size={30} />
       </div>
-      {loading && (
-        <div className="flex w-full h-screen justify-center items-center">
-          <Loader />
-        </div>
-      )}
+    </motion.div>
 
-      <div className="flex items-center gap-4 mt-20 justify-center">
-        {!searchTerm &&
-          data?.map((item) => (
-            <div key={item._id} className="shadow-lg p-2">
-              <div>
-                <Link href={`/user/restaurants/${item._id}`}>
-                  <Image
-                    src={"/images/rest2.jpg"}
-                    width={270}
-                    height={500}
-                    alt="image-text"
-                    className="h-[300px] object-center object-cover"
-                  />
-                </Link>
+    {/* Loader */}
+    {loading && (
+      <div className="flex w-full h-screen justify-center items-center">
+        <Loader />
+      </div>
+    )}
 
-                <div className="flex justify-between mt-4">
-                  <div className="flex flex-col">
-                    <p className="text-sm font-semibold font-comic">
-                      {item.restaurantName}
-                    </p>{" "}
-                    <p className="font-bold font-comic text-red">{item.cuisineType || "italian"}</p>{" "}
-                  </div>
-               
-                    <HeartIcon size={20} className="text-red" />
-        
-                </div>
-              </div>
+    {/* Restaurants Grid */}
+    <motion.div 
+      className="flex items-center gap-4 mt-20 justify-center flex-wrap"
+      initial="hidden"
+      animate="visible"
+      variants={{
+        hidden: {},
+        visible: {
+          transition: { staggerChildren: 0.1 },
+        },
+      }}
+    >
+      {/* No Search Term - Show All */}
+      {!searchTerm && data?.map((item: any) => (
+        <motion.div
+          key={item._id}
+          className="shadow-lg p-2 relative rounded-lg hover:scale-105 transition-transform duration-300 cursor-pointer"
+          variants={{
+            hidden: { opacity: 0, scale: 0.9 },
+            visible: { opacity: 1, scale: 1 },
+          }}
+        >
+          <Link href={`/user/restaurants/${item._id}`}>
+            <Image
+              src={item.thumbnail || "/images/rest2.jpg"}
+              width={270}
+              height={600}
+              alt="restaurant"
+              className="h-[300px] object-cover rounded-md"
+            />
+          </Link>
+
+          <div className="flex justify-between mt-4">
+            <div className="flex flex-col">
+              <p className="text-sm font-semibold font-comic">{item.restaurantName}</p>
+              <p className="font-bold font-comic text-red">{item.cuisineType || "Italian"}</p>
             </div>
-          ))}
-        {searchTerm &&
-          filteredRestaurant?.length !== 0 &&
-          filteredRestaurant?.map((item) => (
-            <div key={item._id} className="shadow-lg p-2">
-           <div>
-                <Link href={`/user/restaurants/${item._id}`}>
-                  <Image
-                    src={"/images/rest2.jpg"}
-                    width={270}
-                    height={500}
-                    alt="image-text"
-                    className="h-[300px] object-center object-cover"
-                  />
-                </Link>
 
-                <div className="flex justify-between mt-4">
-                  <div className="flex flex-col">
-                    <p className="text-sm font-semibold font-comic">
-                      {item.restaurantName}
-                    </p>{" "}
-                    <p className="font-bold font-comic text-red">{item.cuisineType || "italian"}</p>{" "}
-                  </div>
-               
-                    <HeartIcon size={20} className="text-red" />
-        
-                </div>
-              </div>
-            </div>
-          ))}
-        {searchTerm && filteredRestaurant?.length === 0 && (
-          <div>
-            <p className="text-xl text-center font-bold font-comic">
-              No restaurant found
-            </p>
+            <button onClick={() => addProduct(item._id)}>
+              {wishList.includes(item._id) ? (
+                <FaHeart className="text-red" size={25} />
+              ) : (
+                <HeartIcon size={25} />
+              )}
+            </button>
           </div>
-        )}
-      </div>
-    </div>
+
+          {item.isFeatured && (
+            <span className="absolute top-2 right-2 bg-orangeDark text-black px-2 py-1 text-sm font-semibold rounded-full flex items-center gap-1">
+              <SlBadge size={20} /> Featured
+            </span>
+          )}
+        </motion.div>
+      ))}
+
+      {/* If Searching and Found */}
+      {searchTerm && filteredRestaurant?.length !== 0 && filteredRestaurant?.map((item: any) => (
+        <motion.div
+          key={item._id}
+          className="shadow-lg p-2 relative rounded-lg hover:scale-105 transition-transform duration-300 cursor-pointer"
+          variants={{
+            hidden: { opacity: 0, scale: 0.9 },
+            visible: { opacity: 1, scale: 1 },
+          }}
+        >
+          <Link href={`/user/restaurants/${item._id}`}>
+            <Image
+              src={item.thumbnail || "/images/rest2.jpg"}
+              width={270}
+              height={600}
+              alt="restaurant"
+              className="h-[300px] object-cover rounded-md"
+            />
+          </Link>
+
+          <div className="flex justify-between mt-4">
+            <div className="flex flex-col">
+              <p className="text-sm font-semibold font-comic">{item.restaurantName}</p>
+              <p className="font-bold font-comic text-red">{item.cuisineType || "Italian"}</p>
+            </div>
+
+            <button onClick={() => addProduct(item._id)}>
+              {wishList.includes(item._id) ? (
+                <FaHeart className="text-red" size={25} />
+              ) : (
+                <HeartIcon size={25} />
+              )}
+            </button>
+          </div>
+
+          {item.isFeatured && (
+            <span className="absolute top-2 right-2 bg-orangeDark text-black px-2 py-1 text-sm font-semibold rounded-full flex items-center gap-1">
+              <SlBadge size={20} /> Featured
+            </span>
+          )}
+        </motion.div>
+      ))}
+
+      {/* If Searching and Not Found */}
+      {searchTerm && filteredRestaurant?.length === 0 && (
+        <motion.div
+          className="flex justify-center w-full mt-10"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+        >
+          <p className="text-xl font-bold font-comic text-center">
+            No restaurant found
+          </p>
+        </motion.div>
+      )}
+    </motion.div>
+  </div>
   );
 };
 

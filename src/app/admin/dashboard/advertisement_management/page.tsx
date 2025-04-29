@@ -78,7 +78,7 @@ const AdvertisementDialogModel = ({
           "/api/advertisement/uploadImage",
           formData
         );
-        console.log(res);
+       
         toast.success("Ad uploaded successfully");
         return res.data.advertisementImageUrl;
       } catch (error: any) {
@@ -92,11 +92,18 @@ const AdvertisementDialogModel = ({
     try {
       setLoading(true);
       const imageLink = await uploadImages();
+     
       if (imageLink) {
         setFormState((prev) => ({ ...prev, imageUrl: imageLink }));
+    
       }
    
-      const res = await axios.put(`/api/advertisement?id=${id}`, {formState});
+      const {title , link , _id} = formState
+
+      const newObj = {title , link , _id , imageLink}
+  
+
+      const res = await axios.put(`/api/advertisement?id=${id}`, newObj);
       setIsEditingStatus(false);
       toast.success("Ads updated successfully");
       refreshData();
@@ -122,16 +129,17 @@ const AdvertisementDialogModel = ({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant={"outline"}>Details</Button>
+        <Button variant={"outline"} className="text-xs sm:text-base">Details</Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[1200px] h-[95%] pt-10 overflow-y-auto">
+      <DialogContent className="max-w-[320px] h-[80%] sm:max-w-[1200px] sm:h-[95%] pt-10 overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Review Your Ads</DialogTitle>
-          <DialogDescription className="flex w-full justify-between items-center">
+          <DialogDescription className="flex w-full sm:justify-between items-center text-xs sm:text-base">
             View the restaurant’s submitted details and set its approval status
             accordingly.
             {!isEditingStatus ? (
               <Button
+              className="text-xs sm:text-base"
                 onClick={() => {
                   onclickfn();
                 }}
@@ -139,22 +147,22 @@ const AdvertisementDialogModel = ({
                 Edit
               </Button>
             ) : (
-              <Button onClick={() => handleSave(ad._id)}>
+              <Button onClick={() => handleSave(ad._id)} className="text-xs sm:text-base">
                 {loading ? <LuLoader className="animate-spin" /> : "Save"}
               </Button>
             )}
           </DialogDescription>
         </DialogHeader>
 
-        <div className="flex gap-x-28">
+        <div className="flex sm:gap-x-28">
           <div
             className={`space-y-2 ${
-              isEditingStatus ? "flex  flex-col w-1/2" : ""
+              isEditingStatus ? "flex  flex-col w-full sm:w-1/2" : ""
             }`}
           >
             {!isEditingStatus ? (
               <Image
-                src={formState.imageUrl||ad.imageUrl}
+                src={formState.imageUrl}
                 className="w-24 h-24 rounded"
                 width={100}
                 height={100}
@@ -241,10 +249,10 @@ const Page = () => {
   };
 
   return (
-    <div className="px-10 w-full h-screen">
+    <div className="w-full h-screen">
       <Toaster position="bottom-right" reverseOrder={false} />
-      <div className="flex justify-between mt-14 items-center">
-        <h1 className="text-4xl text-center">Your Ads!</h1>
+      <div className="flex justify-around mt-14 items-center">
+        <h1 className="text-xl lg:text-4xl text-center underline">Your Ads</h1>
         <Button onClick={handleAdd}>
           {" "}
           <PlusIcon />
@@ -254,7 +262,7 @@ const Page = () => {
       <table className="min-w-full text-left bg-white mt-5">
         <thead className="bg-gray-100 text-gray-700">
           <tr>
-            <th className="px-4 py-2">Id</th>
+            <th className="px-4 py-2 hidden sm:block">Id</th>
 
             <th className="px-4 py-2">Title</th>
             <th className="px-4 py-2">Actions</th>
@@ -265,10 +273,10 @@ const Page = () => {
           {adsData &&
             adsData.map((ad, ind) => (
               <tr key={ad._id} className="border-b hover:bg-gray-50">
-                <td className="px-4 py-2">{ad._id}</td>
+                <td className="px-4 py-2 hidden sm:block">{ad._id}</td>
 
-                <td className="px-4 py-2">{ad.title}</td>
-                <td className="px-4 py-2">
+                <td className="px-4 py-2 text-xs sm:text-base">{ad.title}</td>
+                <td className="px-4 py-2 text-xs sm:text-base">
                   <AdvertisementDialogModel {...ad} refreshData={get_all_add} />
                 </td>
                 <td>

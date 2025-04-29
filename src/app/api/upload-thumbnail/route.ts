@@ -1,9 +1,7 @@
 import cloudinary from "cloudinary";
 import { NextRequest, NextResponse } from "next/server";
-import fs from "fs/promises";
-import path from "path";
-import { v4 as uuidv4 } from "uuid";
-import { fromPath } from "pdf2pic";
+import fs from "fs";
+import axios from "axios";
 
 // Cloudinary config
 cloudinary.v2.config({
@@ -14,73 +12,48 @@ cloudinary.v2.config({
 
 export async function POST(request: NextRequest) {
   try {
-    const formData = await request.formData();
-    const file = formData.get("files");
+    const { uploaded_url } = await request.json();
 
-    if (!file || !(file instanceof Blob)) {
-      return NextResponse.json(
-        { message: "File not found or invalid type" },
-        { status: 400 }
-      );
-    }
-
-    // Prepare file paths
-    const buffer = Buffer.from(await file.arrayBuffer());
-    const pdfId = uuidv4();
-    const tempDir = path.join(process.cwd(), "temp");
-    const pdfPath = path.join(tempDir, `${pdfId}.pdf`);
-    const imagePath = path.join(tempDir, `${pdfId}.jpg`);
-
-    // Ensure temp folder exists
-    await fs.mkdir(tempDir, { recursive: true });
-
-    // Save PDF to disk
-    await fs.writeFile(pdfPath, buffer);
-   const options = {
-      density: 100,
-      saveFilename: "untitled",
-      savePath: "/images",
-      format: "png",
-      width: 600,
-      height: 600
-    };
-    const convert = fromPath(imagePath, options);
-    const pageToConvertAsImage = 1;
-    
-    const images:any = convert(pageToConvertAsImage, { responseType: "image" })
-      .then((resolve) => {
-        console.log("Page 1 is now converted as image");
-    
-        return resolve;
-      });                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
-  
-      const imageBuffer = images[0]; // First image from PDF
-
-    // Save the image to the disk
-    await fs.writeFile(imagePath, imageBuffer);
-
-
-    // Read image
-    const cloudinaryResult = await new Promise<any>((resolve, reject) => {
-      cloudinary.v2.uploader
-        .upload_stream(
-          { resource_type: "image" , format:"jpg"}, // auto handles different file types
-          (error, result) => {
-            if (error) {
-              reject(error);
-            } else {
-              resolve(result);
-            }
-          }
-        )
-        .end(imageBuffer);
+    // Download PDF as buffer
+    const response = await axios.get(uploaded_url, { 
+      responseType: 'arraybuffer',
+      timeout: 160000,
     });
+
+    const buffer = Buffer.from(response.data);
+
+    // Save temporarily
+    fs.writeFileSync("temp.pdf", buffer);
+
+    // Upload to Cloudinary, extract first page
+    const cloudinaryResult = await new Promise<any>((resolve, reject) => {
+      const uploadStream = cloudinary.v2.uploader.upload_stream(
+        {
+          resource_type: "image",
+          format: "jpg",
+          pages: true, // Important: Allow page-based transformation
+          transformation: [
+            { width: 600, height: 800, crop: "fill", page: 1 }
+          ],
+        },
+        (error, result) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(result);
+          }
+        }
+      );
+      uploadStream.end(buffer);
+    });
+
+    // Clean up
+    fs.unlinkSync("temp.pdf");
+
     const link = cloudinaryResult?.secure_url;
-    console.log(link);
-    
-  
-  return NextResponse.json({link})
-  
+
+
+    return NextResponse.json({ link });
   } catch (error: any) {
     console.error("Error:", error);
     return NextResponse.json(

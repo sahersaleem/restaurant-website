@@ -3,8 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+
 import { FaSackDollar } from "react-icons/fa6";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -65,27 +64,27 @@ const Page = () => {
   };
 
   return (
-    <div className="w-full h-screen ">
-      <h1 className="text-4xl text-center mt-10">Manage Payments</h1>
+    <div className="w-full h-screen font-poppins">
+      <h1 className="text-xl sm:text-4xl text-center mt-10  underline font-poppins">Manage Payments</h1>
 
       {data && (
-        <div className="w-full flex justify-center items-center mt-36 ">
+        <div className="w-full flex justify-center items-center mt-20 sm:mt-36 p-6 lg:p-0">
           <div className="bg-[#FEFFFF] max-w-[400px] shadow-lg rounded-lg p-10">
-            <h1 className="text-2xl font-poppins text-center  font-black">
+            <h1 className="text-xl sm:text-2xl font-poppins text-center ">
               Set Restaurant Listing fees
             </h1>
             <div className="w-full flex flex-col justify-center items-center gap-y-3">
               <div className="flex gap-x-2 mt-5">
                 <FaSackDollar size={40} className="text-[#FBCD6E]" />
-                <div className="font-poppins flex flex-col gap-y-1">
+                <div className="font-poppins flex flex-col gap-y-1 text-xs sm:text-base">
                   <h1>Current Listing Price For Restaurants</h1>
-                  <p className="text-2xl font-poppins font-semibold">
+                  <p className="text-lg sm:text-2xl font-poppins font-semibold">
                     ${data?.featuredPrice}
                   </p>
                 </div>
               </div>
               <div className="flex gap-y-4 flex-col">
-                <label className="text-xl font-poppins font-medium">
+                <label className=" font-poppins font-medium text-xs sm:text-base">
                   Enter new listings price.
                 </label>
                 <Input
@@ -102,7 +101,7 @@ const Page = () => {
                     "Update feature price"
                   )}
                 </Button>
-                <p>
+                <p className="text-xs sm:text-base">
                   This is the amount restaurant will pay to appear in top search
                   and gain visibility.
                 </p>

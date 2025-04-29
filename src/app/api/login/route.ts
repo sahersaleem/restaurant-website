@@ -38,7 +38,7 @@ export async function POST(request: Request) {
     }
 
     const token = Jwt.sign(
-      { userId: findUserByEmail._id, email: findUserByEmail.email },
+      { userId: findUserByEmail._id, email: findUserByEmail.email , role:findUserByEmail.role},
       process.env.JWT_SECRET_KEY!,
       { expiresIn: rememberMe ? "7d" : "1h" }
     );

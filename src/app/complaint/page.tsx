@@ -4,19 +4,19 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Toaster } from "react-hot-toast";
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
-
 import { useForm } from "react-hook-form";
 import { complainSchema, ComplainSchemaType } from "@/schemas/complainSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import toast from "react-hot-toast";
 import { LuLoader } from "react-icons/lu";
-import { useState } from "react";
+import { motion } from "framer-motion";
 
 const Page = () => {
   const [processing, setProcessing] = useState<boolean>(false);
-  const { register, handleSubmit , reset} = useForm<ComplainSchemaType>({
+
+  const { register, handleSubmit, reset } = useForm<ComplainSchemaType>({
     resolver: zodResolver(complainSchema),
     defaultValues: {
       subject: "",
@@ -24,51 +24,71 @@ const Page = () => {
     },
   });
 
-  const handlesave = async (data: any) => {
-    console.log(data);
+  const handlesave = async (data: ComplainSchemaType) => {
     try {
       setProcessing(true);
-      const res = await axios.post("/api/complain", data );
+      const res = await axios.post("/api/complain", data);
       if (res.data) {
-        toast.success("Complain send sucessfully!");
-        reset()
+        toast.success("Complaint sent successfully!");
+        reset();
       }
     } catch (error: any) {
-      toast.error("Error occurred while sending complain!");
+      toast.error("Error occurred while sending complaint!");
+    } finally {
       setProcessing(false);
-    }finally{
-      setProcessing(false)
     }
   };
 
   return (
-    <div className="w-full h-screen flex gap-y-7 items-center flex-col ">
-            <Toaster position="bottom-right" reverseOrder={false} />
-      <h1 className="text-3xl text-center mt-10">Submit your complain</h1>
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-white flex items-center justify-center px-4 py-12">
+      <Toaster position="bottom-right" reverseOrder={false} />
+      
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className="bg-white shadow-xl rounded-2xl p-8 w-full max-w-md space-y-6"
+      >
+        <h1 className="text-2xl font-semibold text-center text-red">
+          Submit Your Complaint
+        </h1>
 
-      <div className="w-full flex justify-center items-center">
-        <div className="max-w-[500px] w-full flex flex-col space-y-2">
-          <form onSubmit={handleSubmit(handlesave)}>
-            <div className="space-y-2">
-              <label>Subject</label>
-              <Input
-                placeholder="Enter subject here..."
-                {...register("subject")}
-              />
-            </div>
-            <div className="space-y-2">
-              <label>Complain</label>
-              <Textarea
-                placeholder="Type your complaint here..."
-                {...register("complain")}
-              />
-            </div>
-            <Button type="submit" className="mt-4">
-            {processing ? <LuLoader className="animate-spin"/>: "Send"}
-            </Button>
-          </form>
-        </div>
-      </div>
+        <form onSubmit={handleSubmit(handlesave)} className="space-y-4">
+          <div>
+            <label className="block mb-1 text-sm font-medium text-gray-600">
+              Subject
+            </label>
+            <Input
+              placeholder="Enter subject..."
+              {...register("subject")}
+              className="focus-visible:ring-red"
+            />
+          </div>
+
+          <div>
+            <label className="block mb-1 text-sm font-medium text-gray-600">
+              Complaint
+            </label>
+            <Textarea
+              placeholder="Type your complaint..."
+              {...register("complain")}
+              className="focus-visible:ring-red"
+            />
+          </div>
+
+          <Button
+            type="submit"
+            disabled={processing}
+            className="w-full bg-red hover:bg-red-500 text-white"
+          >
+            {processing ? (
+              <LuLoader className="animate-spin text-lg" />
+            ) : (
+              "Send"
+            )}
+          </Button>
+        </form>
+      </motion.div>
     </div>
   );
 };

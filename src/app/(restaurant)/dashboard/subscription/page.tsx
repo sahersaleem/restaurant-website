@@ -47,14 +47,14 @@ const Page = () => {
   };
 
   return (
-    <div className="w-full h-screen">
-      <h1 className="text-4xl text-center font-bold font-poppins mt-10">
+    <div className="w-full h-full pb-20">
+      <h1 className="text-xl underline sm:text-4xl text-center font-bold font-poppins mt-6 sm:mt-10">
         Subscription
       </h1>
 
-      <div className="min-h-screen flex justify-center items-center">
-        <div className="bg-white shadow-xl rounded-xl p-10 max-w-xl text-center">
-          <h1 className="text-3xl font-bold mb-4">
+      <div className="min-h-screen flex justify-center items-center px-6">
+        <div className="bg-white shadow-xl rounded-xl px-6 py-6 sm:p-10 max-w-xl text-center">
+          <h1 className="text-xl sm:text-3xl font-bold mb-4 " >
             <FaMedal className="text-8xl text-yellow-500 font-poppins" />
             Feature Your Restaurant!
           </h1>
@@ -64,20 +64,20 @@ const Page = () => {
             featured on our homepage and top of search results!
           </p>
           <ul className="text-left list-disc ml-6 text-gray-600 mb-6">
-            <li className="list-none text-2xl font-poppins font-semibold">
-              <LuCircleCheckBig className="inline text-2xl text-green-600" />{" "}
+            <li className="list-none sm:text-2xl font-poppins font-semibold">
+              <LuCircleCheckBig className="inline sm:text-2xl text-green-600" />{" "}
               Top in search results
             </li>
-            <li className="list-none text-2xl font-poppins font-semibold">
-              <LuCircleCheckBig className="inline text-2xl text-green-600" />{" "}
+            <li className="list-none sm:text-2xl font-poppins font-semibold">
+              <LuCircleCheckBig className="inline sm:text-2xl text-green-600" />{" "}
               Promoted on homepage
             </li>
-            <li className="list-none text-2xl font-poppins font-semibold">
-              <LuCircleCheckBig className="inline text-2xl text-green-600" />{" "}
+            <li className="list-none sm:text-2xl font-poppins font-semibold">
+              <LuCircleCheckBig className="inline sm:text-2xl text-green-600" />{" "}
               Featured badge for your profile
             </li>
-            <li className="list-none text-2xl font-poppins font-semibold">
-              <LuCircleCheckBig className="inline text-2xl text-green-600" />{" "}
+            <li className="list-none sm:text-2xl font-poppins font-semibold">
+              <LuCircleCheckBig className="inline sm:text-2xl text-green-600" />{" "}
               More visibility, more orders!
             </li>
           </ul>

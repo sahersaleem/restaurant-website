@@ -1,5 +1,5 @@
 import Stripe from "stripe";
-import { Payment } from "@/models/paymentSchema";
+
 import { NextRequest, NextResponse } from "next/server";
 import dbConnect from "@/lib/db";
 

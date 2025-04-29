@@ -53,7 +53,7 @@ const ComplainDialogModel = ({
       <DialogTrigger>
         <Button variant={"outline"}>Open</Button>
       </DialogTrigger>
-      <DialogContent className="w-[500px]">
+      <DialogContent className="w-[300px] sm:w-[500px]">
         <DialogHeader>
           <DialogTitle>{res.subject}</DialogTitle>
           <DialogDescription>{res.complain}</DialogDescription>
@@ -133,13 +133,14 @@ const deleteCoomplain =  async(id:string) =>{
                 <Loader />
               </div>
             )}
-      <h1 className="text-4xl text-center mt-10">Complaint management</h1>
+      <h1 className="text-xl sm:text-4xl text-center mt-10 underline font-poppins">Complaint management</h1>
 
       <table className="min-w-full text-left bg-white mt-5">
         <thead className="bg-gray-100 text-gray-700">
           <tr>
-            <th className="px-4 py-2">Id</th>
-            <th className="px-4 py-2">Subject</th>
+          <th className="px-4 py-2 hidden sm:inline-block">Id</th>
+
+             <th className="px-4 py-2">Subject</th>
             <th className="px-4 py-2">Status</th>
             <th className="px-4 py-2">Actions</th>
             <th className="px-4 py-2">Delete</th>
@@ -148,18 +149,18 @@ const deleteCoomplain =  async(id:string) =>{
         <tbody>
           {complainsData &&
             complainsData.map((res, ind) => (
-              <tr key={res._id} className="border-b hover:bg-gray-50">
-                <td className="px-4 py-2">{res._id}</td>
-                <td className="px-4 py-2">{res.subject}</td>
-                <td className={`px-4 py-2 capitalize ${res.isResolved?"text-green-500" :"text-yellow-500"}`}>
+              <tr key={res._id} className="border-b hover:bg-gray-50 text-xs sm:text-base">
+                <td className="px-4 py-2 text-xs sm:text-base hidden sm:inline-block">{res._id}</td>
+                <td className="px-4 py-2 text-xs sm:text-base">{res.subject}</td>
+                <td className={`px-4 py-2 capitalize text-xs sm:text-base ${res.isResolved?"text-green-500" :"text-yellow-500"}`}>
                   {res.isResolved ? "resolved" : "pending"}
                 </td>
-                <td className="px-4 py-2">
+                <td className="px-4 py-2 text-xs sm:text-base">
                   <ComplainDialogModel {...res} refreshData={get_complains} />
                 </td>
                 <td>
                   {" "}
-                  <Button onClick={()=>deleteCoomplain(res._id)}>
+                  <Button onClick={()=>deleteCoomplain(res._id)} className="text-xs sm:text-base">
                     <Trash2Icon />
                   </Button>
                 </td>

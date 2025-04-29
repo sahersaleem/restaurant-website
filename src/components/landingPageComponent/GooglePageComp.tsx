@@ -3,10 +3,12 @@
 import { useEffect, useState } from "react";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import React from "react";
+import { useRouter } from "next/navigation";
 
 type Props = {
   address: string;
   restaurantName: string;
+  id:string
 };
 
 const containerStyle = {
@@ -14,11 +16,13 @@ const containerStyle = {
   height: "400px",
 };
 
-const GooglePageComp = ({ address, restaurantName }: Props) => {
+const GooglePageComp = ({ address, restaurantName , id}: Props) => {
   const [coordinate, setCoordinate] = useState<{
     lat: number;
     lng: number;
   } | null>(null);
+
+  const router = useRouter()
 
   console.log(process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY)
   const fetchCordinates = async () => {
@@ -43,6 +47,33 @@ const GooglePageComp = ({ address, restaurantName }: Props) => {
     fetchCordinates();
   }, [address]);
 
+
+
+
+
+const handleRoute = async(id:string)=>{
+  router.push(`/restaurant-profile/${id}`)
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   return (
     <div className="mt-20">
       <h1 className="text-3xl font-medium font-poppins">Localization</h1>
@@ -53,7 +84,7 @@ const GooglePageComp = ({ address, restaurantName }: Props) => {
             center={coordinate}
             zoom={15}
           >
-            <Marker position={coordinate} title={restaurantName} />
+            <Marker position={coordinate} title={restaurantName} onClick={()=>{handleRoute(id)}} />
           </GoogleMap>
         )}
       </LoadScript>

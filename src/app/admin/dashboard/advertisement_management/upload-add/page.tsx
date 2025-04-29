@@ -10,6 +10,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { Toaster } from "react-hot-toast";
 import { LuLoader } from "react-icons/lu";
+import { useRouter } from "next/navigation";
 const Page = () => {
   const { register, handleSubmit } = useForm<AdSchemaType>({
     resolver: zodResolver(AdSchema),
@@ -22,7 +23,7 @@ const Page = () => {
   const [files, setFiles] = useState<File>();
   const [imageLink, setImageLink] = useState<string>("");
   const [isLoading , setIsLoading] = useState<boolean>(false)
-
+const router = useRouter()
   const handleFiles = async (e: File[]) => {
     if (e) {
       setFiles(e[0]);
@@ -42,12 +43,15 @@ const Page = () => {
 
         if (res) {
           toast.success("Ad uploaded successfully");
+          router.push('/admin/dashboard/advertisement_management')
+
         }
-        console.log("Image upload succesfully");
+      
+       
         setImageLink(res.data.advertisementImageUrl);
         return res.data.advertisementImageUrl
       } catch (error: any) {
-        console.log("Error occurr while uploading images");
+ 
         toast.error("Error occurr while uploading ad");
         return ""
       }
@@ -80,10 +84,10 @@ const Page = () => {
     <div className="px-10 w-full h-screen">
       <Toaster position="bottom-right" reverseOrder={false} />
 
-      <h1 className="text-4xl text-center mt-10">Ad Integration</h1>
+      <h1 className="text-xl sm:text-4xl text-center mt-10 underline">Ad Integration</h1>
       <form
         onSubmit={handleSubmit(handleForm)}
-        className="space-y-4 mt-10 w-1/3"
+        className="space-y-4 mt-10 w-full sm:w-1/3"
       >
         <div>
           <label>Ad Title</label>

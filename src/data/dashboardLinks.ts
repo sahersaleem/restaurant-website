@@ -15,10 +15,7 @@ export const restaurantDashboardLinks = [
     label: "Subscription",
     href: "/dashboard/subscription",
   },
-  {
-    label: "Logout",
-    href: "/logout",
-  },
+ 
 ];
   
 

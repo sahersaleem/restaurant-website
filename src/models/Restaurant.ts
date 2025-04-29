@@ -14,7 +14,7 @@ const RestaurantSchema = new Schema(
     googlePage: { type: String , required: false},
     website_link: { type: String , required: false},
     logo: { type: String },
-    thumbnailUrl:{type:String},
+    thumbnail:{type:String , required: false},
     status: {
       type: String,
       enum: ['pending', 'approved',"reject"],

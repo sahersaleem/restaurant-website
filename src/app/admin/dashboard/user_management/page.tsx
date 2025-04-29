@@ -68,7 +68,7 @@ const Page = () => {
       )}
       {
         <div>
-          <h1 className="text-4xl text-center mt-10">Users</h1>
+          <h1 className="text-xl lg:text-4xl text-center mt-10 mb-10 underline font-poppins">Users</h1>
           {dataLoading && !userData?.length ? (
             <div className="mt-10 w-full flex items-center justify-center">
               <p className="text-3xl text-center mt-40">Users not found!</p>
@@ -78,9 +78,9 @@ const Page = () => {
               <thead>
                 <tr className="bg-gray-100 text-left text-sm font-medium text-gray-700 uppercase tracking-wider">
                   <th className="py-2 px-4">Name</th>
-                  <th className="py-2 px-4">Email</th>
+                  <th className="py-2 px-4 hidden lg:inline-block">Email</th>
                   <th className="py-2 px-4">Role</th>
-                  <th className="py-2 px-4">Actions</th>
+                  <th className="py-2 px-4 hidden lg:inline-block">Actions</th>
                 </tr>
               </thead>
               <tbody className="">
@@ -88,9 +88,9 @@ const Page = () => {
                   userData.map((user: any) => (
                     <tr key={user.id} className="border-t">
                       <td className="py-2 px-4">{user.name}</td>
-                      <td className="py-2 px-4">{user.email}</td>
+                      <td className="py-2 px-4 hidden lg:inline-block">{user.email}</td>
                       <td className="py-2 px-4">{user.role}</td>
-                      <td className="py-2 px-4 flex gap-2">
+                      <td className="py-2 px-4  gap-2 hidden lg:flex">
                         <select
                           className="border p-1 rounded"
                           onChange={(e) => {

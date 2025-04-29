@@ -53,6 +53,3 @@ export async function POST(request: Request) {
   }
 }
 
-export const config = {
-  api: { bodyParser: false }, // Disable default body parser to handle file uploads manually
-};

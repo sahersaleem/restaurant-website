@@ -11,9 +11,11 @@ import { CgWebsite } from "react-icons/cg";
 import { FcGoogle } from "react-icons/fc";
 import { MdOutlineLocationOn } from "react-icons/md";
 import { IoMdRestaurant } from "react-icons/io";
+import { TimingSlot } from "@/types/types";
 const Page = () => {
   const { id } = useParams();
   const [data, setData] = useState<IRestaurant>();
+  const [timings, setTimings] = useState<TimingSlot[] | null>(null);
 
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -30,16 +32,32 @@ const Page = () => {
       setLoading(false);
     }
   };
+  const getRestaurantTimings = async () => {
+    if (!id) {
+      return;
+    }
+
+    try {
+      const res = await axios.get(
+        `/api/restaurant/create_restaurant_timming?id=${id}`
+      );
+
+      setTimings(res.data.restaurantTimingsFindById);
+    } catch (error: any) {
+      console.log(error.message);
+    }
+  };
 
   useEffect(() => {
     getALLRestaurantsById();
+    getRestaurantTimings();
   }, []);
 
   return (
-    <div className="bg-slate-50 w-screen h-auto flex justify-center items-center  overflow-x-hidden">
+    <div className="bg-slate-50 w-screen h-auto flex justify-center items-center  overflow-x-hidden min-h-screen">
       {data && (
         <div className="max-w-[800px] w-full bg-card shadow-lg  rounded-lg p-10 mt-20 space-y-6 ">
-          <div className="flex justify-between">
+          <div className="flex justify-between flex-col lg:flex-row">
             <Image
               src={data?.logo || ""}
               alt="logo"
@@ -59,42 +77,58 @@ const Page = () => {
               </p>
               <div className="flex flex-col mt-2 gap-y-1">
                 <Link href={data!.googlePage!} className="underline text-sm">
-                  <CgWebsite className=" inline-block mr-3" size={25} />{" "}
+                  <CgWebsite className=" inline-block mr-3" size={20} />{" "}
                   {data?.googlePage}
                 </Link>
                 <Link href={data!.website_link!} className="underline text-sm">
-                  <FcGoogle className=" inline-block mr-3" size={25} />{" "}
+                  <FcGoogle className=" inline-block mr-3" size={20} />{" "}
                   {data!.website_link!}
                 </Link>
                 <p className="text-sm">
                   <MdOutlineLocationOn
                     className=" inline-block mr-3 font-comic"
-                    size={25}
+                    size={20}
                   />
                   {data.address}
                 </p>
                 <p className="text-lg inline-block mr-3">
                   <IoMdRestaurant
                     className=" inline-block mr-3 font-comic"
-                    size={25}
+                    size={20}
                   />
                   {data.cuisineType || "Italic"}
                 </p>
               </div>
             </div>
           </div>
-               
-            <div>
-            <h1 className="mt-4 font-medium text-xl font-comic">Timings</h1>
-            {
-              data.timings?.map((time , index)=>(
-                <div key={index}>{time.days} : {time.slots.length>=1 ? time.slots[0] : `${time.slots[0]}-${time.slots[1]} ` }</div>
-              ))
-            }
+
+          <div>
+            <h1 className="mt-4 font-bold text-xl font-comic ">Timings</h1>
+            <div className="text-sm sm:text-lg rounded-lg flex flex-col w-full">
+              {timings?.map((timing, index) => (
+                <div
+                  key={index}
+                  className="flex justify-between items-center px-6
+}"
+                >
+                  <p>{timing.day}</p>
+                  <div>
+                    {timing.slots.length > 1 ? (
+                      <div className=" ">
+                        {timing.slots[0]} to {timing.slots[1]}
+                      </div>
+                    ) : (
+                      timing.slots[0]
+                    )}
+                  </div>
+                </div>
+              ))}
             </div>
+          </div>
           <GooglePageComp
             restaurantName={data!.restaurantName!}
             address={data!.address!}
+            id={data._id!}
           />
         </div>
       )}

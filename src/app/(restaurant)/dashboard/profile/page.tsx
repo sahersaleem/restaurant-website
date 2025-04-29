@@ -23,7 +23,7 @@ const Page = () => {
     restaurantName: "",
     description: "",
     address: "",
-    timings: { day: "", slots: [""] },
+    timings: [{ day: "", slots: [""] }],
     cuisineType: "",
     password: "",
     confirmPassword: "",
@@ -232,20 +232,23 @@ const Page = () => {
   }, [logoLink]);
 
   return (
-    <div className="bg-white  mt-10 w-full  flex  items-center flex-col h-auto font-poppins min-h-screen pb-20 ">
+    <div className="bg-white  mt-10 w-full  flex  items-center flex-col h-auto font-poppins min-h-screen pb-20  ">
       {loadingData ? (
         <div className="w-full h-screen flex justify-center items-center">
           <Loader />
         </div>
       ) : (
         <>
-          <div className="flex justify-around w-full">
+          <div className="flex justify-evenly sm:justify-around w-full flex-col sm:flex-row items-center">
             {" "}
-            <h1 className="text-4xl text-center font-bold font-poppins">
+            <h1 className="text-xl sm:text-4xl text-center font-bold font-poppins underline">
               Restaurant Profile
             </h1>{" "}
             {isEditing ? (
-              <Button onClick={handleSave} className="bg-red">
+              <Button
+                onClick={handleSave}
+                className="bg-red text-xs sm:text-base w-[100px] mt-10 sm:mt-0"
+              >
                 {loading ? (
                   <LuLoader size={30} className="animate-spin" />
                 ) : (
@@ -253,14 +256,17 @@ const Page = () => {
                 )}
               </Button>
             ) : (
-              <Button onClick={handleEdit} className="bg-red">
+              <Button
+                onClick={handleEdit}
+                className="bg-red text-xs sm:text-base w-[100px]"
+              >
                 Edit
               </Button>
             )}
           </div>
 
-          <div className="flex flex-row gap-x-6 items-center justify-evenly  w-full">
-            <div className="px-10 mt-20  space-y-4 w-2/5 ">
+          <div className="flex flex-col sm:flex-row gap-x-6 items-center justify-evenly  w-full">
+            <div className="px-6 sm:px-10 mt-20  space-y-4 sm:w-2/5 ">
               {restaurantInforamtion && (
                 <>
                   <div>
@@ -279,7 +285,7 @@ const Page = () => {
                           {!!restaurantInforamtion.restaurantName ? (
                             <p>{restaurantInforamtion.restaurantName}</p>
                           ) : (
-                            <p className="italic ">Add Description here</p>
+                            <p className="italic text-xs sm:text-base">Add restaurant name here</p>
                           )}
                         </div>
                       )}
@@ -400,24 +406,19 @@ const Page = () => {
                     <h2 className="">Restaurant Opening Timings</h2>
 
                     {!isEditing && restaurantTimingData ? (
-                      <div className="text-lg bg-gray-100  rounded-lg flex flex-col">
-                         
-                    {
-                      restaurantTimingData.map((timings , index)=>(
-                        <div key={index} className="flex justify-between items-center px-6 py-2
-}">
-                          <p>{timings.days}</p>
-                         <div>{timings.slots[0]} to {timings.slots[1]}</div>
-                        </div>
-                      ))
-                    }
-
-
-
-
-
-
-
+                      <div className="text-sm sm:text-lg bg-gray-100  rounded-lg flex flex-col ">
+                        {restaurantTimingData.map((timings, index) => (
+                          <div
+                            key={index}
+                            className="flex justify-between items-center px-6 py-2
+}"
+                          >
+                            <p>{timings.day}</p>
+                            <div>
+                              {timings.slots[0]} to {timings.slots[1]}
+                            </div>
+                          </div>
+                        ))}
                       </div>
                     ) : (
                       <div></div>
@@ -475,23 +476,23 @@ const Page = () => {
             </div>
             <div>
               <h2
-                className="text-center text-xl
+                className="text-center text-lg sm:text-xl mt-10 sm:mt-0
             "
               >
                 Your business logo
               </h2>
               {!isEditing && restaurantInforamtion?.logo ? (
-                <div className=" w-[300px] h-[300px] bg-black rounded-full">
+                <div className="  w-[200px] h-[200px] sm:w-[300px] sm:h-[300px] bg-black rounded-full">
                   <Image
                     src={formState.logo || restaurantInforamtion?.logo}
                     alt="restaurant-image"
                     width={300}
                     height={300}
-                    className="object-cover object-center rounded-full w-[300px] h-[300px] "
+                    className="object-cover object-center rounded-full   w-[200px] h-[200px] sm:w-[300px] sm:h-[300px] "
                   />
                 </div>
               ) : (
-                <div>
+                <div className="w-full   flex sm:inline-block  justify-center items-center flex-col">
                   <FileUpload onChange={handleFiles} />
                   <Button
                     onClick={uploadImages}

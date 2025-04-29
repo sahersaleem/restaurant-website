@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 import { Toaster, toast } from "react-hot-toast";
 
 const Page = () => {
-  const [files, setFiles] = useState<File|null>();
+  const [files, setFiles] = useState<File | null>();
   const [pdfLinks, setPdfLinks] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const { restaurantId } = useRestaurantContext();
@@ -59,11 +59,23 @@ const Page = () => {
             "Content-Type": "multipart/form-data",
           },
         });
-       
-        const uploaded_url = res.data;
-        console.log(uploaded_url)
+
+        const uploaded_url = res.data.pdfUrl;
+
         if (uploaded_url) {
-          const pdfsData = { pdfLinks: uploaded_url, restaurantId };
+          const thumbnail = await axios.post("/api/upload-thumbnail", {
+            uploaded_url,
+          });
+
+          if (thumbnail.data.link) {
+            console.log(thumbnail.data.link);
+          }
+
+          const pdfsData = {
+            pdfLinks: uploaded_url,
+            restaurantId,
+            thumbnail: thumbnail.data.link,
+          };
 
           setLoading(true);
 
@@ -74,13 +86,12 @@ const Page = () => {
           console.log(response);
           toast.success("Menu uploaded successfully");
           await getRestaurantPdfLink();
-          setFiles(null)
+          setFiles(null);
           setLoading(false);
-          setIsEditing(false)
-        
+          setIsEditing(false);
         }
       } catch (error: any) {
-       toast.error("UPload failed")
+        toast.error("UPload failed");
       }
     }
   };
@@ -90,17 +101,17 @@ const Page = () => {
   };
 
   return (
-    <div className="bg-white  mt-10 w-full ">
-      <h1 className="text-4xl text-center font-bold ">Upload Your Menu </h1>
-      <div className="w-full flex justify-around items-center">
-        <div className="w-1/2 p-10">
-          <p className="text-3xl">
+    <div className="bg-white mt-20 sm:mt-10 w-full h-full min-h-screen">
+      <h1 className="text-2xl sm:text-4xl text-center font-bold font-poppins underline ">Upload Your Menu </h1>
+      <div className="w-full flex justify-evenly sm:justify-around items-center h-screen flex-col sm:flex-row">
+        <div className="sm:w-1/2 p-10">
+          <p className="text-lg sm:text-3xl">
             Easily upload your restaurant’s menu in PDF format so customers can
             view or download it.
           </p>
           {pdflink && !isEditing && (
             <div className="bg-gray-200 p-4 rounded-lg mt-10 flex justify-between items-center">
-              {pdflink?  (
+              {pdflink ? (
                 <>
                   <Link
                     href={pdflink}
@@ -120,11 +131,7 @@ const Page = () => {
           )}
           {!pdflink || isEditing ? (
             <FileUpload
-              name="files"
-              placeholder="upload"
-              type="file"
               onChange={handleFiles}
-              accept="application/pdf"
             />
           ) : (
             ""
@@ -144,8 +151,14 @@ const Page = () => {
             ""
           )}
         </div>
-
-        <Image src={"/images/menu.png"} width={600} height={600} alt="menu" />
+{
+       !isEditing && <Image
+          src={"/images/menupic.jpg"}
+          width={400}
+          height={400}
+          alt="menu"
+          className="rounded-full w-[200px] h-[200px] sm:w-[400px] sm:h-[400px] "
+        />}
       </div>
     </div>
   );

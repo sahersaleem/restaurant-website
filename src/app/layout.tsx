@@ -5,6 +5,7 @@ import "./globals.css";
 import { Poppins } from "next/font/google";
 import { Chewy, Comfortaa } from "next/font/google";
 import NextTopLoader from 'nextjs-toploader';
+import CartContext from "@/components/landingPageComponent/CartContext";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -60,8 +61,9 @@ export default function RootLayout({
       <body
         className={`${poppins.variable} ${chew.variable}  ${comic.variable}  antialiased overflow-x-hidden`}
       >
-        <NextTopLoader />
-        {children}
+        <NextTopLoader color="#E2CB30"/>
+        <CartContext>  {children}</CartContext>
+      
       </body>
     </html>
   );

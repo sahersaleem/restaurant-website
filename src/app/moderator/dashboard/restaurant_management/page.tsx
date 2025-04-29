@@ -29,6 +29,7 @@ import { LuLoader } from "react-icons/lu";
 import { FileUpload } from "@/components/ui/file-upload";
 import { Trash2Icon } from "lucide-react";
 import { DialogClose } from "@radix-ui/react-dialog";
+import Link from "next/link";
 
 const RestaurantDialogModel = ({
   refreshData,
@@ -45,7 +46,7 @@ const RestaurantDialogModel = ({
     restaurantName: "",
     description: "",
     address: "",
-    timings: { day: "", slots: [""] },
+    timings: [{ day: "", slots: [""] }],
     cuisineType: "",
     password: "",
     confirmPassword: "",
@@ -141,7 +142,7 @@ const RestaurantDialogModel = ({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant={"outline"}>Details</Button>
+        <Button variant={"outline"} className="text-xs sm:text-base">Details</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[1200px] h-[95%] pt-10 overflow-y-auto">
         <DialogHeader>
@@ -152,7 +153,7 @@ const RestaurantDialogModel = ({
             {!isEditingStatus ? (
               <Button onClick={() => onclickfn()}>Edit</Button>
             ) : (
-              <Button onClick={() => handleSave(res._id)}>
+              <Button onClick={() => handleSave(res._id!)}>
                 {loading ? <LuLoader className="animate-spin" /> : "Save"}
               </Button>
             )}
@@ -166,7 +167,7 @@ const RestaurantDialogModel = ({
             }`}
           >
             <Image
-              src={res.logo}
+              src={res.logo||""}
               className="w-24 h-24 rounded"
               width={100}
               height={100}
@@ -284,19 +285,14 @@ const RestaurantDialogModel = ({
             {!isEditingStatus ? (
               <Button variant={"link"}>
                 {" "}
-                <a
-                  href={res.pdfLinks}
-                  className=" font-semibold text-lg text-red underline"
-                >
-                  View Menu Pdf
-                </a>
+                <a href={res.pdfLinks} target="_blank" rel="noopener noreferrer" type="application/pdf" download={res.pdfLinks}>Open</a>
               </Button>
             ) : (
               <div>
                 <FileUpload onChange={handleFiles} />
                 <Button
                   onClick={() => {
-                    uploadImages(res._id);
+                    uploadImages(res._id!);
                   }}
                   className={` mt-9 bg-red`}
                   variant={"default"}
@@ -325,7 +321,7 @@ const RestaurantDialogModel = ({
             </p>
 
             {res.status === "pending" ? (
-              <Button onClick={() => approvedRestaurant(res._id, "approved")}>
+              <Button onClick={() => approvedRestaurant(res._id!, "approved")}>
                 Approved Restaurant
               </Button>
             ) : (
@@ -336,7 +332,7 @@ const RestaurantDialogModel = ({
               <Select
                 value={status}
                 onValueChange={(value: "pending" | "approved" | "reject") => {
-                  approvedRestaurant(res._id, value);
+                  approvedRestaurant(res._id!, value);
                 }}
               >
                 <SelectTrigger className="w-[180px]">
@@ -362,7 +358,7 @@ const Page = () => {
   const [isDeleted, setisDeleted] = useState<boolean>(false);
   const get_restaurant = async () => {
     try {
-      const res = await axios.get("/api/restaurants");
+      const res = await axios.get("/api/admin/restaurants");
       setRestaurantsData(res.data.restaurant);
     } catch (error: any) {
       console.log(error.message);
@@ -400,26 +396,26 @@ const Page = () => {
       )}
       {
         <div>
-          <h1 className="text-4xl text-center mt-10">Restaurant Management</h1>
+     <h1 className="text-xl lg:text-4xl text-center mt-10 mb-10 underline font-poppins">Manage Restaurants</h1>
 
-          <table className="min-w-full text-left bg-white mt-5">
+          <table className="min-w-full text-left bg-white mt-5 ">
             <thead className="bg-gray-100 text-gray-700">
               <tr>
                 <th className="px-4 py-2">Name</th>
                 <th className="px-4 py-2">Location</th>
-                <th className="px-4 py-2">Status</th>
-                <th className="px-4 py-2">Menu PDF</th>
-                <th>Delete</th>
+                <th className="px-4 py-2 ">Status</th>
+                <th className="px-4 py-2 hidden sm:inline-block">View</th>
+                <th className="px-4 py-2 hidden sm:inline-block">Delete</th>
               </tr>
             </thead>
             <tbody>
               {restaurantsData &&
                 restaurantsData.map((res, ind) => (
                   <tr key={res._id} className="border-b hover:bg-gray-50">
-                    <td className="px-4 py-2">{res.restaurantName}</td>
-                    <td className="px-4 py-2">{res.address}</td>
+                    <td className="px-4 py-2 text-xs sm:text-base">{res.restaurantName}</td>
+                    <td className="px-4 py-2 text-xs sm:text-base">{res.address}</td>
                     <td
-                      className={`px-4 py-2 capitalize font-bold ${
+                      className={`px-4 py-2 capitalize font-bold text-xs sm:text-base ${
                         res.status === "pending"
                           ? "text-yellow-500 font-semibold"
                           : res.status === "approved"
@@ -429,17 +425,17 @@ const Page = () => {
                     >
                       {res.status}
                     </td>
-                    <td className="px-4 py-2">
+                    <td className="px-4 py-2 hidden sm:inline-block">
                       <RestaurantDialogModel
                         {...res}
                         refreshData={get_restaurant}
                       />
                     </td>
 
-                    <td>
+                    <td className="hidden sm:inline-block">
                       <Dialog>
                         <DialogTrigger asChild>
-                          <Button variant="destructive"><Trash2Icon/></Button>
+                          <Button variant="destructive" ><Trash2Icon className="text-xs sm:text-base"/></Button>
                         </DialogTrigger>
                         <DialogContent className="sm:max-w-md">
                           <DialogHeader>
@@ -451,7 +447,7 @@ const Page = () => {
                       
                           <DialogFooter className="sm:justify-start">
                             <DialogClose asChild>
-                              <Button type="button" onClick={()=>deleteRestaurant(res._id)}>
+                              <Button type="button" onClick={()=>deleteRestaurant(res._id!)}>
                                 yes
                               </Button>
                             </DialogClose>
