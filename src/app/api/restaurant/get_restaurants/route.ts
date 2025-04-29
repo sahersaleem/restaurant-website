@@ -2,7 +2,7 @@ import dbConnect from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
 
 import { Restaurant } from "@/models/Restaurant";
-
+export const dynamic = 'force-dynamic';
 export async function GET(request: NextRequest) {
   try {
     await dbConnect();
