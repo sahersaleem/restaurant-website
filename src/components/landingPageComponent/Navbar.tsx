@@ -32,8 +32,14 @@ const Navbar = () => {
     <nav className="w-full bg-red lg:bg-transparent   py-6 px-4 md:px-8 flex justify-between items-center relative">
       {/* Logo or Brand Name */}
       <div className="text-white text-xl font-bold">
-
-        <Image src={'/images/image.png'}  width={60} height={60} alt="iji3j" className="rounded-full lg:w-[100px] lg:h-[100px]"/>
+        <Image
+          src="/images/image.png"
+          width={60}
+          height={60}
+          alt="Logo"
+          className="rounded-full lg:w-[100px] lg:h-[100px] object-cover object-center"
+          priority
+        />
       </div>
 
       {/* Desktop Links */}
@@ -56,7 +62,10 @@ const Navbar = () => {
             <Link href="/signUp" className="button">
               S’inscrire
             </Link>
-            <Link href="/login" className="text-white font-comic hover:text-orangeDark">
+            <Link
+              href="/login"
+              className="text-white font-comic hover:text-orangeDark"
+            >
               Se connecter
             </Link>
           </>
@@ -86,10 +95,18 @@ const Navbar = () => {
 
           {!isAuthenticated ? (
             <>
-              <Link href="/signUp" onClick={() => setIsMenuOpen(false)} className="button">
+              <Link
+                href="/signUp"
+                onClick={() => setIsMenuOpen(false)}
+                className="button"
+              >
                 S’inscrire
               </Link>
-              <Link href="/login" onClick={() => setIsMenuOpen(false)} className="button">
+              <Link
+                href="/login"
+                onClick={() => setIsMenuOpen(false)}
+                className="button"
+              >
                 Se connecter
               </Link>
             </>
