@@ -75,23 +75,20 @@ PageWrapper.displayName = "PageWrapper";
 
   return (
     <div className="flex flex-col items-center py-6 lg:py-10">
-      <HTMLFlipBook
-      {...{
-        width: 370,
-        height: 500,
-        maxShadowOpacity: 0.5,
-        drawShadow: true,
-        showCover: true,
-        size: "fixed",
-        className: "shadow-lg",
-        ref: bookRef,
-        minWidth: 315,
-        maxWidth: 1000,
-        minHeight: 400,
-        maxHeight: 1536,
-        useMouseEvents: true,
-        usePortrait: false,
-      } as any}
+     
+
+
+<HTMLFlipBook
+     {... {
+      width: 370,
+      height: 500,
+      maxShadowOpacity: 0.5,
+      drawShadow: true,
+      showCover: true,
+      size: "fixed",
+      className: "shadow-lg",
+      ref: bookRef,
+     } as any}
       >
         {Array.from({ length: numPages }, (_, index) => (
           <PageWrapper key={index} pageNumber={index + 1} pdfUrl={pdfUrl} />
