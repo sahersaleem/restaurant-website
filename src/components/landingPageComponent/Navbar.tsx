@@ -32,14 +32,15 @@ const Navbar = () => {
     <nav className="w-full bg-red lg:bg-transparent   py-6 px-4 md:px-8 flex justify-between items-center relative">
       {/* Logo or Brand Name */}
       <div className="text-white text-xl font-bold">
-        <Image
-          src="/images/image.png"
-          width={60}
-          height={60}
-          alt="Logo"
-          className="rounded-full lg:w-[100px] lg:h-[100px] object-cover object-center"
-          priority
-        />
+        <div className="w-[60px] h-[60px] lg:w-[100px] lg:h-[100px] relative">
+          <Image
+            src="/images/image.png"
+            alt="Logo"
+            fill
+            className="rounded-full object-cover object-center"
+            priority
+          />
+        </div>
       </div>
 
       {/* Desktop Links */}
