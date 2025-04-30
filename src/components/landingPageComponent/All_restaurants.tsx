@@ -74,10 +74,10 @@ const All_restaurants = () => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.7 }}
     >
-      <div className="flex items-center justify-center gap-x-4 border border-black px-4 py-2 rounded-lg w-1/2">
+      <div className="flex items-center justify-center gap-x-4 border border-black px-4 py-2 rounded-lg w-[80%] sm:w-1/2">
         <input
           placeholder="Search restaurant by cuisine, restaurant name and location..."
-          className="outline-none bg-transparent font-comic w-full"
+          className="outline-none bg-transparent font-comic w-full text-xs sm:text-sm"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />

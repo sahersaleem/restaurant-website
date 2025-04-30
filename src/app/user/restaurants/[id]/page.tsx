@@ -20,6 +20,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { GrFormNext } from "react-icons/gr";
 import { GrFormPrevious } from "react-icons/gr";
+import Loader from "@/components/landingPageComponent/Loader";
 
 const PageWrapper = forwardRef<HTMLDivElement, { pageNumber: number; pdfUrl: string }>(
   ({ pageNumber, pdfUrl }: { pageNumber: number; pdfUrl: string }, ref) => (
@@ -152,11 +153,11 @@ const Page = () => {
           <h1 className="text-2xl font-comic font-semibold text-center underline ">
             Restaurant menu pdf
           </h1>
-          {data && (
+          {data ? (
             <>
               <RestaurantPdfs pdfUrl={data?.pdfLinks} />
             </>
-          )}
+          ):<Loader/>}
         </div>
       </div>
     </div>
