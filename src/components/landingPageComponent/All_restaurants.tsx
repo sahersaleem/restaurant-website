@@ -54,7 +54,7 @@ const All_restaurants = () => {
   });
 
   return (
-    <div className="h-auto pb-10 lg:pb-0 lg:h-screen mt-10 lg:mt-0" id="all_restaurants">
+    <div className="h-auto pb-10  lg:pb-20 mt-20 lg:mt-0" id="all_restaurants">
     <Toaster position="bottom-right" reverseOrder={false} />
     
     {/* Heading Animation */}
@@ -120,27 +120,27 @@ const All_restaurants = () => {
               width={270}
               height={600}
               alt="restaurant"
-              className="h-[300px] object-cover rounded-md"
+              className=" w-[150px] h-[150px] sm:w-[200px] sm:h-[200px] object-cover rounded-md"
             />
           </Link>
 
           <div className="flex justify-between mt-4">
             <div className="flex flex-col">
-              <p className="text-sm font-semibold font-comic">{item.restaurantName}</p>
-              <p className="font-bold font-comic text-red">{item.cuisineType || "Italian"}</p>
+              <p className="text-xs sm:text-sm font-semibold font-comic">{item.restaurantName}</p>
+              <p className="text-xs sm:text-sm font-bold font-comic text-red">{item.cuisineType || "Italian"}</p>
             </div>
 
             <button onClick={() => addProduct(item._id)}>
               {wishList.includes(item._id) ? (
-                <FaHeart className="text-red" size={25} />
+                <FaHeart className="text-red" size={20} />
               ) : (
-                <HeartIcon size={25} />
+                <HeartIcon size={20} />
               )}
             </button>
           </div>
 
           {item.isFeatured && (
-            <span className="absolute top-2 right-2 bg-orangeDark text-black px-2 py-1 text-sm font-semibold rounded-full flex items-center gap-1">
+            <span className="absolute top-2 right-2 bg-orangeDark text-black px-2 py-1 text-xs sm:text-sm font-semibold rounded-full flex items-center gap-1">
               <SlBadge size={20} /> Featured
             </span>
           )}
@@ -149,45 +149,45 @@ const All_restaurants = () => {
 
       {/* If Searching and Found */}
       {searchTerm && filteredRestaurant?.length !== 0 && filteredRestaurant?.map((item: any) => (
-        <motion.div
-          key={item._id}
-          className="shadow-lg p-2 relative rounded-lg hover:scale-105 transition-transform duration-300 cursor-pointer"
-          variants={{
-            hidden: { opacity: 0, scale: 0.9 },
-            visible: { opacity: 1, scale: 1 },
-          }}
-        >
-          <Link href={`/user/restaurants/${item._id}`}>
-            <Image
-              src={item.thumbnail || "/images/rest2.jpg"}
-              width={270}
-              height={600}
-              alt="restaurant"
-              className="h-[300px] object-cover rounded-md"
-            />
-          </Link>
+      <motion.div
+      key={item._id}
+      className="shadow-lg p-2 relative rounded-lg hover:scale-105 transition-transform duration-300 cursor-pointer"
+      variants={{
+        hidden: { opacity: 0, scale: 0.9 },
+        visible: { opacity: 1, scale: 1 },
+      }}
+    >
+      <Link href={`/user/restaurants/${item._id}`}>
+        <Image
+          src={item.thumbnail || "/images/rest2.jpg"}
+          width={270}
+          height={600}
+          alt="restaurant"
+          className=" w-[150px] h-[150px] sm:w-[200px] sm:h-[200px] object-cover rounded-md"
+        />
+      </Link>
 
-          <div className="flex justify-between mt-4">
-            <div className="flex flex-col">
-              <p className="text-sm font-semibold font-comic">{item.restaurantName}</p>
-              <p className="font-bold font-comic text-red">{item.cuisineType || "Italian"}</p>
-            </div>
+      <div className="flex justify-between mt-4">
+        <div className="flex flex-col">
+          <p className="text-xs sm:text-sm font-semibold font-comic">{item.restaurantName}</p>
+          <p className="text-xs sm:text-sm font-bold font-comic text-red">{item.cuisineType || "Italian"}</p>
+        </div>
 
-            <button onClick={() => addProduct(item._id)}>
-              {wishList.includes(item._id) ? (
-                <FaHeart className="text-red" size={25} />
-              ) : (
-                <HeartIcon size={25} />
-              )}
-            </button>
-          </div>
-
-          {item.isFeatured && (
-            <span className="absolute top-2 right-2 bg-orangeDark text-black px-2 py-1 text-sm font-semibold rounded-full flex items-center gap-1">
-              <SlBadge size={20} /> Featured
-            </span>
+        <button onClick={() => addProduct(item._id)}>
+          {wishList.includes(item._id) ? (
+            <FaHeart className="text-red" size={20} />
+          ) : (
+            <HeartIcon size={20} />
           )}
-        </motion.div>
+        </button>
+      </div>
+
+      {item.isFeatured && (
+        <span className="absolute top-2 right-2 bg-orangeDark text-black px-2 py-1 text-xs sm:text-sm font-semibold rounded-full flex items-center gap-1">
+          <SlBadge size={20} /> Featured
+        </span>
+      )}
+    </motion.div>
       ))}
 
       {/* If Searching and Not Found */}

@@ -12,16 +12,20 @@ export async function PUT(request: NextRequest) {
       return NextResponse.json({ message: "restaurantId is required" }, { status: 400 });
     }
 
+    console.log(pdfLinks, logoLink, restaurantId, thumbnail);
+    
     const updateData: any = {};
 
     if (pdfLinks) updateData.pdfLinks = pdfLinks;
     if (thumbnail) updateData.thumbnail = thumbnail;
     if (logoLink) updateData.logo = logoLink;
 
-    const updatedRestaurant = await Restaurant.updateOne(
-      { _id: restaurantId },
+    const updatedRestaurant = await Restaurant.findByIdAndUpdate(
+       restaurantId,
       { $set: updateData }
     );
+
+
 
     return NextResponse.json({ updated_restaurant: updatedRestaurant });
   } catch (error: any) {

@@ -51,6 +51,8 @@ export async function POST(request: NextRequest) {
     fs.unlinkSync("temp.pdf");
 
     const link = cloudinaryResult?.secure_url;
+    console.log(link);
+    
 
 
     return NextResponse.json({ link });

@@ -77,6 +77,8 @@ const Page = () => {
             thumbnail: thumbnail.data.link,
           };
 
+
+          console.log(pdfsData)
           setLoading(true);
 
           const response = await axios.put(
