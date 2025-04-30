@@ -41,7 +41,7 @@ const Page = () => {
       const res = await axios.get(
         `/api/restaurant/create_restaurant_timming?id=${id}`
       );
-
+      console.log(res.data.restaurantTimingsFindById)
       setTimings(res.data.restaurantTimingsFindById);
     } catch (error: any) {
       console.log(error.message);
@@ -111,7 +111,7 @@ const Page = () => {
                   className="flex justify-between items-center px-6
 }"
                 >
-                  <p>{timing.day}</p>
+                  <p>{timing.days}</p>
                   <div>
                     {timing.slots.length > 1 ? (
                       <div className=" ">

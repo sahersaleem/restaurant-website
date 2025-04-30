@@ -1,5 +1,5 @@
 export interface TimingSlot {
-  day: string;
+  days: string;
   slots: string[];
 }
 
