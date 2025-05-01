@@ -12,6 +12,7 @@ import { FcGoogle } from "react-icons/fc";
 import { MdOutlineLocationOn } from "react-icons/md";
 import { IoMdRestaurant } from "react-icons/io";
 import { TimingSlot } from "@/types/types";
+import { IoMdArrowBack } from "react-icons/io";
 const Page = () => {
   const { id } = useParams();
   const [data, setData] = useState<IRestaurant>();
@@ -66,6 +67,7 @@ const Page = () => {
               className="rounded-lg shadow-lg"
             />
             <div className="">
+              <Link href={'/'} className="text-sm underline"><IoMdArrowBack className="inline-block"/>Back to menu</Link>
               <h1 className="mt-4 font-semibold text-2xl font-comic">
                 {data?.restaurantName}
               </h1>

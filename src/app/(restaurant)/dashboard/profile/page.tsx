@@ -34,7 +34,7 @@ const Page = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [isUploading, setIsUploading] = useState<boolean>(false);
   const [timings, setTimings] = useState<TimingSlot[]>([
-    { day: "", slots: [""] },
+    { days: "", slots: [""] },
   ]);
 
   const [restaurantTimingData, setRestaurantTimingData] =
@@ -44,12 +44,12 @@ const Page = () => {
   const router = useRouter();
 
   const handleAddDay = () => {
-    setTimings([...timings, { day: "", slots: [""] }]);
+    setTimings([...timings, { days: "", slots: [""] }]);
   };
 
   const handleDayCHange = (index: number, value: string) => {
     const updated = [...timings];
-    updated[index].day = value;
+    updated[index].days = value;
     setTimings(updated);
   };
 
@@ -413,7 +413,7 @@ const Page = () => {
                             className="flex justify-between items-center px-6 py-2
 }"
                           >
-                            <p>{timings.day}</p>
+                            <p>{timings.days}</p>
                             <div>
                               {timings.slots[0]} to {timings.slots[1]}
                             </div>
@@ -429,7 +429,7 @@ const Page = () => {
                           <div key={dayIndex} className="flex flex-col gap-y-4">
                             <div className="rest-inform-para">
                               <input
-                                value={timing.day}
+                                value={timing.days}
                                 onChange={(e: any) =>
                                   handleDayCHange(dayIndex, e.target.value)
                                 }
