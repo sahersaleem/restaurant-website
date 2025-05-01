@@ -67,7 +67,7 @@ const Page = () => {
               className="rounded-lg shadow-lg"
             />
             <div className="">
-              <Link href={'/'} className="text-sm underline"><IoMdArrowBack className="inline-block"/>Back to menu</Link>
+              <Link href={`/user/restaurants/${data._id}`} className="text-sm underline"><IoMdArrowBack className="inline-block"/>Back to menu</Link>
               <h1 className="mt-4 font-semibold text-2xl font-comic">
                 {data?.restaurantName}
               </h1>
@@ -110,7 +110,7 @@ const Page = () => {
               {timings?.map((timing, index) => (
                 <div
                   key={index}
-                  className="flex justify-between items-center px-6
+                  className="flex justify-between items-center lg:px-6
 }"
                 >
                   <p>{timing.days}</p>
