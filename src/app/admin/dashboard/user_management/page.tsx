@@ -68,7 +68,7 @@ const Page = () => {
       )}
       {
         <div>
-          <h1 className="text-xl lg:text-4xl text-center mt-10 mb-10 underline font-poppins">Users</h1>
+          <h1 className="text-xl lg:text-4xl text-center mt-10 mb-10 underline font-poppins">Utilisatrices</h1>
           {dataLoading && !userData?.length ? (
             <div className="mt-10 w-full flex items-center justify-center">
               <p className="text-3xl text-center mt-40">Users not found!</p>

@@ -396,7 +396,7 @@ const Page = () => {
       )}
       {
         <div>
-     <h1 className="text-xl lg:text-4xl text-center mt-10 mb-10 underline font-poppins">Manage Restaurants</h1>
+     <h1 className="text-xl lg:text-4xl text-center mt-10 mb-10 underline font-poppins">Gérer des restaurants</h1>
 
           <table className="min-w-full text-left bg-white mt-5 ">
             <thead className="bg-gray-100 text-gray-700">
@@ -439,16 +439,17 @@ const Page = () => {
                         </DialogTrigger>
                         <DialogContent className="sm:max-w-md">
                           <DialogHeader>
-                            <DialogTitle>Are you sure?</DialogTitle>
+                            <DialogTitle>Es-tu sûr?</DialogTitle>
                             <DialogDescription>
-                              Do you want to delete <span className="font-semibold">{res.restaurantName}</span> 
+                            Voulez-vous supprimer <span className="font-semibold">{res.restaurantName}</span> 
                             </DialogDescription>
                           </DialogHeader>
                       
                           <DialogFooter className="sm:justify-start">
                             <DialogClose asChild>
                               <Button type="button" onClick={()=>deleteRestaurant(res._id!)}>
-                                yes
+                              oui
+
                               </Button>
                             </DialogClose>
                           </DialogFooter>
