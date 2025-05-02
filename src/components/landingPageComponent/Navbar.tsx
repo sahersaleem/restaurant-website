@@ -45,7 +45,7 @@ const Navbar = () => {
           href="/admin/dashboard"
           className="text-white text-sm font-semibold hover:text-orange underline"
         >
-          Back to Admin Dashboard
+      Tableau de bord d’administration
         </Link>
       );
     } else if (userRole === "owner") {
@@ -54,7 +54,7 @@ const Navbar = () => {
           href="/dashboard"
          className="text-white text-sm font-semibold hover:text-orange underline"
         >
-          Back to Restaurant Dashboard
+     Tableau de bord du restaurant
         </Link>
       );
     }
@@ -64,7 +64,7 @@ const Navbar = () => {
           href="/dashboard"
          className="text-white text-sm font-semibold hover:text-orange underline"
         >
-          Back to moderator dashboard
+       Tableau de bord du modérateur
         </Link>
       );
     }

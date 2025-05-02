@@ -76,7 +76,7 @@ const handleRoute = async(id:string)=>{
 
   return (
     <div className="mt-20">
-      <h1 className="text-3xl font-medium font-poppins">Localization</h1>
+      <h1 className="text-3xl font-medium font-poppins">Localisation</h1>
       <LoadScript googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!}>
         {coordinate && (
           <GoogleMap

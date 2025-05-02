@@ -63,7 +63,7 @@ const Advertisement = ({ position }: { position: Positon }) => {
   >
     {/* Yellow Ad Badge */}
     <div className="absolute top-2 left-2 bg-yellow-400 text-black text-xs font-semibold px-2 py-1 rounded z-10">
-      Ad
+    publicité
     </div>
   
     {/* Ad Image */}

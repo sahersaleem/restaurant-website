@@ -56,10 +56,10 @@ const RatingAndReviews = () => {
 
   return (
     <div className="mt-20">
-      <h3 className="text-4xl font-comic font-semibold">Rating and Reviews</h3>
+      <h3 className="text-4xl font-comic font-semibold">Note et avis</h3>
 
       <div className="flex flex-col w-1/2 gap-y-3">
-        <h3 className="text-2xl font-comic mt-10">Leave a review!</h3>
+        <h3 className="text-2xl font-comic mt-10">Laissez un avis !</h3>
         <div className="flex ">
           {[1, 2, 3, 4, 5].map((star) => (
             <button key={star} onClick={() => setRating(star)}>
@@ -70,26 +70,26 @@ const RatingAndReviews = () => {
         <textarea
           value={reviews}
           onChange={(e) => setReviews(e.target.value)}
-          placeholder="Write your feedback here..."
+          placeholder="Écrivez vos commentaires ici..."
         />
         <Button className="bg-red hover:bg-red" onClick={submitReview}>
           {processing ? (
             <LuLoader className="animate-spin" />
           ) : (
-            "Submit reviews"
+            "Soumettre des avis"
           )}
         </Button>
       </div>
       <div>
-        <h2 className="text-2xl font-bold mb-4 mt-10">Customer Reviews</h2>
+        <h2 className="text-2xl font-bold mb-4 mt-10">Avis des clients</h2>
         {data && data.length === 0 ? (
-          <p>No reviews yet.</p>
+          <p>Pas encore d’avis.</p>
         ) : (
           <div className="space-y-4">
             {data?.map((review: any) => (
               <div key={review._id} className="border p-4 rounded shadow">
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="font-semibold">Rating:</span>
+                  <span className="font-semibold">Notation:</span>
                   <span>{review.rating} ⭐</span>
                 </div>
                 <p className="text-gray-700">{review.review}</p>

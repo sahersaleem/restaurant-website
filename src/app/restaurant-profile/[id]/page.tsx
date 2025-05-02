@@ -48,7 +48,7 @@ const Page = () => {
            <Button className="mb-6 bg-red">
           <Link href={`/user/restaurants/${data?._id}`}>
             <FaArrowLeft    className="inline-block mx-2" />
-            Back to Localization
+            Retour à la localisation
           </Link>
         </Button>
           <h1 className="font-comic text-3xl ">{data?.restaurantName}</h1>
@@ -82,7 +82,7 @@ const Page = () => {
             >
               <FaFilePdf size={40} className="text-red" />
               <span className="fonr-comics text-sm underline">
-                Download Menu
+              Télécharger le menu
               </span>
             </Link>
           </div>

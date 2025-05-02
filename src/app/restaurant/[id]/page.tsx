@@ -78,7 +78,7 @@ const Page = () => {
               <Button className=" bg-red mt-6 sm:mt-0">
                 <Link href={`/user/restaurants/${data._id}`}>
                   <FaArrowLeft className="inline-block mx-2" />
-                  Back to menu pdf
+                  Retour au menu pdf
                 </Link>
               </Button>
               <h1 className="mt-4 font-semibold text-2xl font-comic">
@@ -118,7 +118,7 @@ const Page = () => {
           </div>
 
           <div>
-            <h1 className="mt-4 font-bold text-xl font-comic ">Timings</h1>
+            <h1 className="mt-4 font-bold text-xl font-comic ">Horaires</h1>
             <div className="text-sm sm:text-lg rounded-lg flex flex-col w-full">
               {timings?.map((timing, index) => (
                 <div

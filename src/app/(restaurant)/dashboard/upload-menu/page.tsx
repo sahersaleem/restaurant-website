@@ -104,12 +104,12 @@ const Page = () => {
 
   return (
     <div className="bg-white mt-20 sm:mt-10 w-full h-full min-h-screen">
-      <h1 className="text-2xl sm:text-4xl text-center font-bold font-poppins underline ">Upload Your Menu </h1>
+      <h1 className="text-2xl sm:text-4xl text-center font-bold font-poppins underline ">Téléchargez votre menu </h1>
       <div className="w-full flex justify-evenly sm:justify-around items-center h-screen flex-col sm:flex-row">
         <div className="sm:w-1/2 p-10">
           <p className="text-lg sm:text-3xl">
-            Easily upload your restaurant’s menu in PDF format so customers can
-            view or download it.
+          Téléchargez facilement le menu de votre restaurant au format PDF pour que les clients puissent
+          Consultez-le ou téléchargez-le.
           </p>
           {pdflink && !isEditing && (
             <div className="bg-gray-200 p-4 rounded-lg mt-10 flex justify-between items-center">
@@ -144,9 +144,9 @@ const Page = () => {
               {loading ? (
                 <LuLoader className="animate-spin" />
               ) : isEditing ? (
-                "Save"
+                "Sauvegarder"
               ) : (
-                "upload"
+                "télécharger"
               )}
             </button>
           ) : (

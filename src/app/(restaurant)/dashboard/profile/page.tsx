@@ -242,7 +242,7 @@ const Page = () => {
           <div className="flex justify-evenly sm:justify-around w-full flex-col sm:flex-row items-center">
             {" "}
             <h1 className="text-xl sm:text-4xl text-center font-bold font-poppins underline">
-              Restaurant Profile
+              Profil du restaurant
             </h1>{" "}
             {isEditing ? (
               <Button
@@ -252,7 +252,7 @@ const Page = () => {
                 {loading ? (
                   <LuLoader size={30} className="animate-spin" />
                 ) : (
-                  "save"
+                  "sauvegarder"
                 )}
               </Button>
             ) : (
@@ -260,7 +260,7 @@ const Page = () => {
                 onClick={handleEdit}
                 className="bg-red text-xs sm:text-base w-[100px]"
               >
-                Edit
+                Éditer
               </Button>
             )}
           </div>
@@ -270,14 +270,15 @@ const Page = () => {
               {restaurantInforamtion && (
                 <>
                   <div>
-                    <h2 className="">Restaurant Name</h2>
+                    <h2 className="">Nom du restaurante</h2>
                     <div className="rest-inform-para">
                       {isEditing ? (
                         <input
                           value={formState?.restaurantName}
                           name="restaurantName"
                           onChange={handleInput}
-                          placeholder="restaurantName"
+                          placeholder="Nom du restaurant
+"
                           disabled={!isEditing}
                         />
                       ) : (
@@ -285,21 +286,23 @@ const Page = () => {
                           {!!restaurantInforamtion.restaurantName ? (
                             <p>{restaurantInforamtion.restaurantName}</p>
                           ) : (
-                            <p className="italic text-xs sm:text-base">Add restaurant name here</p>
+                            <p className="italic text-xs sm:text-base">
+                              Ajoutez le nom du restaurant ici
+                            </p>
                           )}
                         </div>
                       )}
                     </div>
                   </div>
                   <div>
-                    <h2 className="">Restaurant Address</h2>
+                    <h2 className="">Adresse du restaurant</h2>
                     <div className="rest-inform-para">
                       {isEditing ? (
                         <input
                           value={formState?.address}
                           name="address"
                           onChange={handleInput}
-                          placeholder="Address"
+                          placeholder="Adresse"
                           disabled={!isEditing}
                         />
                       ) : (
@@ -307,7 +310,7 @@ const Page = () => {
                           {!!restaurantInforamtion ? (
                             <p>{restaurantInforamtion.address}</p>
                           ) : (
-                            <p className="italic ">Add address here</p>
+                            <p className="italic ">Ajouter l’adresse ici</p>
                           )}
                         </div>
                       )}
@@ -336,12 +339,13 @@ const Page = () => {
                     </div>
                   </div>
                   <div>
-                    <h2 className="">Phone Number</h2>
+                    <h2 className="">Numéro de téléphone </h2>
                     <div className="rest-inform-para">
                       {isEditing ? (
                         <input
                           value={formState?.phoneNumber}
-                          name="phoneNumber"
+                          name="numéro de téléphone
+"
                           onChange={handleInput}
                           placeholder="+92333977373"
                           disabled={!isEditing}
@@ -351,14 +355,16 @@ const Page = () => {
                           {!!restaurantInforamtion.phoneNumber ? (
                             <p>{restaurantInforamtion.phoneNumber}</p>
                           ) : (
-                            <p className="italic ">Add phone number here</p>
+                            <p className="italic ">
+                              Ajoutez votre numéro de téléphone ici
+                            </p>
                           )}
                         </div>
                       )}
                     </div>
                   </div>
                   <div>
-                    <h2 className="">Google page</h2>
+                    <h2 className="">Page Google</h2>
                     <div className="rest-inform-para">
                       {isEditing ? (
                         <input
@@ -373,14 +379,16 @@ const Page = () => {
                           {!!restaurantInforamtion.googlePage ? (
                             <p>{restaurantInforamtion.googlePage}</p>
                           ) : (
-                            <p className="italic ">Add google page here</p>
+                            <p className="italic ">
+                              Ajouter une page google ici
+                            </p>
                           )}
                         </div>
                       )}
                     </div>
                   </div>
                   <div>
-                    <h2 className="">Website link</h2>
+                    <h2 className="">Lien vers le site Web</h2>
                     <div className="rest-inform-para">
                       {isEditing ? (
                         <input
@@ -395,7 +403,9 @@ const Page = () => {
                           {!!restaurantInforamtion.website_link ? (
                             <p>{restaurantInforamtion.website_link}</p>
                           ) : (
-                            <p className="italic ">Add website link here</p>
+                            <p className="italic ">
+                              Ajoutez le lien du site Web ici
+                            </p>
                           )}
                         </div>
                       )}
@@ -403,7 +413,7 @@ const Page = () => {
                   </div>
 
                   <div>
-                    <h2 className="">Restaurant Opening Timings</h2>
+                    <h2 className="">Horaires d’ouverture du restaurant</h2>
 
                     {!isEditing && restaurantTimingData ? (
                       <div className="text-sm sm:text-lg bg-gray-100  rounded-lg flex flex-col ">
@@ -457,7 +467,7 @@ const Page = () => {
                               onClick={() => handleAddSlot(dayIndex)}
                               className="text-sm text-blue-500 underline"
                             >
-                              + Add Time Slot
+                              + Ajouter un créneau horaire
                             </button>
                           </div>
                         ))
@@ -467,7 +477,7 @@ const Page = () => {
                         onClick={() => handleAddDay()}
                         className="text-sm text-blue-500 underline"
                       >
-                        + Add Day
+                        + Ajouter un jour
                       </button>
                     )}
                   </div>
@@ -479,7 +489,7 @@ const Page = () => {
                 className="text-center text-lg sm:text-xl mt-10 sm:mt-0
             "
               >
-                Your business logo
+                Le logo de votre entreprise
               </h2>
               {!isEditing && restaurantInforamtion?.logo ? (
                 <div className="  w-[200px] h-[200px] sm:w-[300px] sm:h-[300px] bg-black rounded-full">
@@ -502,7 +512,7 @@ const Page = () => {
                     {isUploading ? (
                       <LuLoader size={30} className="animate-spin" />
                     ) : (
-                      "upload"
+                      "télécharger"
                     )}
                   </Button>
                 </div>

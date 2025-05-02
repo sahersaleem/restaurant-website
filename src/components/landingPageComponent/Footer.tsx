@@ -10,78 +10,78 @@ const Footer = () => {
        
         <div>
         <h2 className=" sm:text-lg lg:text-2xl font-bold sm:mb-2 lg:mb-4  tracking-wider text-orangeDark">
-            Site map
+        Plan du site
           </h2>
           <ul className="space-y-1 sm:space-y-2 text-xs sm:text-sm font-poppins">
             <li>
               <a href="/" className="hover:underline">
-                Signed directories
+              Si Répertoires signés
               </a>
             </li>
             <li>
-              <a href="/about" className="hover:underline">
-                Store Directories
+              <a href="/" className="hover:underline">
+              Annuaires de magasins
               </a>
             </li>
             <li>
-              <a href="/contact" className="hover:underline">
-                All catalogs
+              <a href="/" className="hover:underline">
+              Tous les catalogues
               </a>
             </li>
           </ul>
         </div>
         <div>
         <h2 className=" sm:text-lg lg:text-2xl font-bold sm:mb-2 lg:mb-4  tracking-wider text-orangeDark">
-            Advertisers
+        Tous les annonceurs
           </h2>
           <ul className="space-y-1 sm:space-y-2 text-xs sm:text-sm font-poppins">
             <li>
               <a href="/" className="hover:underline">
-                Signs / Shops
+              Enseignes / Boutiques
               </a>
             </li>
             <li>
-              <a href="/about" className="hover:underline">
-                Advertising Networks
+              <a href="/" className="hover:underline">
+              Réseaux publicitaires
               </a>
             </li>
             <li>
-              <a href="/contact" className="hover:underline">
-                Cookie settings
+              <a href="/" className="hover:underline">
+              Paramètres des cookies
               </a>
             </li>
           </ul>
         </div>
         <div>
         <h2 className=" sm:text-lg lg:text-2xl font-bold sm:mb-2 lg:mb-4  tracking-wider text-orangeDark">
-            Our company
+        Notre entreprise
           </h2>
           <ul className="space-y-1 sm:space-y-2 text-xs sm:text-sm font-poppins">
             <li>
               <a href="/" className="hover:underline">
-                Who are we?
+              Qui sommes-nous ?
               </a>
             </li>
             <li>
-              <a href="/about" className="hover:underline">
-                Legal notice 
+              <a href="/" className="hover:underline">
+              Mentions légales
               </a>
             </li>
             <li>
-              <a href="/contact" className="hover:underline">
-                Contact us
+              <a href="/" className="hover:underline">
+              Contactez-nous
               </a>
             </li>
           </ul>
         </div>
         <div>
           <h2 className=" sm:text-lg lg:text-2xl font-bold sm:mb-2 lg:mb-4  tracking-wider text-orangeDark">
-            Partner sites
+          Sites partenaires
           </h2>
           <ul className="space-y-1 sm:space-y-2 text-xs sm:text-sm font-poppins">
             <li>
               <a href="/" className="hover:underline">
-                prime.re
+              prime.re
               </a>
             </li>
           </ul>

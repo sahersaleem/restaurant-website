@@ -163,7 +163,7 @@ const Page = () => {
         <Button className="mt-10 mx-16 bg-red">
           <Link href={"/"}>
             <FaArrowLeft className="inline-block mx-2" />
-            Back to home
+            Retour à l’accueil
           </Link>
         </Button>
       </div>
@@ -176,13 +176,13 @@ const Page = () => {
             className="text-lg text-red underline "
             href={`/restaurant/${id}`}
           >
-            View details
+           Voir les détails
           </Link>
         </div>
         <div className="w-screen h-screen max-w-7xl mx-auto flex justify-center items-center bg-[#282C2F]">
           <div className="">
             <h1 className="text-2xl font-comic font-semibold text-center underline ">
-              Restaurant menu pdf
+            Carte du restaurant pdf
             </h1>
             {data ? (
               <>

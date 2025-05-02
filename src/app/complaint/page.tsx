@@ -50,16 +50,16 @@ const Page = () => {
         className="bg-white shadow-xl rounded-2xl p-8 w-full max-w-md space-y-6"
       >
         <h1 className="text-2xl font-semibold text-center text-red">
-          Submit Your Complaint
+        Soumettez votre plainte
         </h1>
 
         <form onSubmit={handleSubmit(handlesave)} className="space-y-4">
           <div>
             <label className="block mb-1 text-sm font-medium text-gray-600">
-              Subject
+            sujet
             </label>
             <Input
-              placeholder="Enter subject..."
+              placeholder="Entrez le sujet..."
               {...register("subject")}
               className="focus-visible:ring-red"
             />
@@ -67,10 +67,10 @@ const Page = () => {
 
           <div>
             <label className="block mb-1 text-sm font-medium text-gray-600">
-              Complaint
+            Plainte
             </label>
             <Textarea
-              placeholder="Type your complaint..."
+              placeholder="Tapez votre plainte.."
               {...register("complain")}
               className="focus-visible:ring-red"
             />
@@ -84,7 +84,7 @@ const Page = () => {
             {processing ? (
               <LuLoader className="animate-spin text-lg" />
             ) : (
-              "Send"
+              "Envoyer"
             )}
           </Button>
         </form>

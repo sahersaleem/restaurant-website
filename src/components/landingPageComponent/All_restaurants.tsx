@@ -65,7 +65,7 @@ const All_restaurants = () => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
     >
-      Top Picks of the Week
+      Meilleurs choix de la semaine
     </motion.h1>
 
     {/* Search Bar Animation */}
@@ -77,7 +77,7 @@ const All_restaurants = () => {
     >
       <div className="flex items-center justify-center gap-x-4 border border-black px-4 py-2 rounded-lg w-[80%] sm:w-1/2">
         <input
-          placeholder="Search restaurant by cuisine, restaurant name and location..."
+          placeholder="Recherchez un restaurant par cuisine, nom du restaurant et emplacement.."
           className="outline-none bg-transparent font-comic w-full text-xs sm:text-sm"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
@@ -143,7 +143,7 @@ const All_restaurants = () => {
 
           {item.isFeatured && (
             <span className="absolute top-2 right-2 bg-orangeDark text-black px-2 py-1 text-xs sm:text-sm font-semibold rounded-full flex items-center gap-1">
-              <SlBadge size={20} /> Featured
+              <SlBadge size={20} />Vedette
             </span>
           )}
         </motion.div>

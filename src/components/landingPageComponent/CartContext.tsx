@@ -34,14 +34,14 @@ const CartContext = ({ children }: { children: React.ReactNode }) => {
     const findId = wishList.find((id) => id === productId);
 
     if (findId) {
-      toast.error("product already added in wish list");
+      toast.error("Restaurant déjà ajouté dans la liste de souhaits");
 
       return;
     } else {
       setWishList((prev) => {
         return [...prev, productId];
       });
-      toast.success("product added in wish list successfully");
+      toast.success("Restaurant ajouté à la liste de souhaits avec succès");
     }
   };
 
