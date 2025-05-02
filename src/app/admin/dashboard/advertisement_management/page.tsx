@@ -143,10 +143,11 @@ const AdvertisementDialogModel = ({
       </DialogTrigger>
       <DialogContent className="max-w-[320px] h-[80%] sm:max-w-[1200px] sm:h-[95%] pt-10 overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Review Your Ads</DialogTitle>
+          <DialogTitle>Examinez vos annonces
+          </DialogTitle>
           <DialogDescription className="flex w-full sm:justify-between items-center text-xs sm:text-base">
-            View the restaurant’s submitted details and set its approval status
-            accordingly.
+          Afficher les détails des annonces soumises
+
             {!isEditingStatus ? (
               <Button
               className="text-xs sm:text-base"
@@ -286,7 +287,8 @@ const Page = () => {
     <div className="w-full h-screen">
       <Toaster position="bottom-right" reverseOrder={false} />
       <div className="flex justify-around mt-14 items-center">
-        <h1 className="text-xl lg:text-4xl text-center underline">Your Ads</h1>
+        <h1 className="text-xl lg:text-4xl text-center underline">Vos annonces
+        </h1>
         <Button onClick={handleAdd}>
           {" "}
           <PlusIcon />
