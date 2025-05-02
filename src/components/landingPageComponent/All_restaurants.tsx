@@ -14,6 +14,7 @@ import { FaHeart } from "react-icons/fa";
 import { Toaster } from "react-hot-toast";
 import { SlBadge } from "react-icons/sl";
 import {motion} from "framer-motion"
+import Advertisement from "./Advertisement";
 const All_restaurants = () => {
   const [data, setData] = useState<IRestaurant[]>();
   const [loading, setLoading] = useState<boolean>(false);
@@ -104,8 +105,9 @@ const All_restaurants = () => {
         },
       }}
     >
-      {/* No Search Term - Show All */}
+      <Advertisement position="top"/>
       {!searchTerm && data?.map((item: any) => (
+
         <motion.div
           key={item._id}
           className="shadow-lg p-2 relative rounded-lg hover:scale-105 transition-transform duration-300 cursor-pointer"
@@ -147,7 +149,7 @@ const All_restaurants = () => {
         </motion.div>
       ))}
 
-      {/* If Searching and Found */}
+      
       {searchTerm && filteredRestaurant?.length !== 0 && filteredRestaurant?.map((item: any) => (
       <motion.div
       key={item._id}

@@ -11,6 +11,13 @@ import toast from "react-hot-toast";
 import { Toaster } from "react-hot-toast";
 import { LuLoader } from "react-icons/lu";
 import { useRouter } from "next/navigation";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 const Page = () => {
   const { register, handleSubmit } = useForm<AdSchemaType>({
     resolver: zodResolver(AdSchema),
@@ -23,6 +30,7 @@ const Page = () => {
   const [files, setFiles] = useState<File>();
   const [imageLink, setImageLink] = useState<string>("");
   const [isLoading , setIsLoading] = useState<boolean>(false)
+  const [position, setPosition] = useState<"top" | "side" | "inline">("top");
 const router = useRouter()
   const handleFiles = async (e: File[]) => {
     if (e) {
@@ -66,7 +74,7 @@ const router = useRouter()
     const advertisementImages =  await uploadImages();
       const { title, link } = data;
 
-      const adInformation = { title, link, imageLink:advertisementImages };
+      const adInformation = { title, link, imageLink:advertisementImages  , position};
 
       console.log(adInformation);
 
@@ -102,6 +110,22 @@ const router = useRouter()
             {...register("link")}
             placeholder="Add advertisement link here"
           />
+        </div>
+        <div>
+        <label className="block text-sm font-medium mb-1">Select Position</label>
+      <Select
+        value={position}
+        onValueChange={(val: "top" | "side" | "inline") => setPosition(val)}
+      >
+        <SelectTrigger className="mb-4">
+          <SelectValue placeholder="Select Position" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="top">Top</SelectItem>
+          <SelectItem value="side">Side</SelectItem>
+          <SelectItem value="inline">Inline</SelectItem>
+        </SelectContent>
+      </Select>
         </div>
         <div>
           <label>Ad Image</label>

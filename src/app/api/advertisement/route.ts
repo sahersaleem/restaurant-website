@@ -6,16 +6,17 @@ export async function POST(request: NextRequest) {
   try {
     await dbConnect();
 
-    const { title, imageLink, link } = await request.json();
+    const { title, imageLink, link, position } = await request.json();
 
-    console.log(title, imageLink, link);
+    console.log(title, imageLink, link, position);
 
     const newAdd = await new Ad({
       title,
       imageUrl: imageLink,
       link,
+      position,
     });
-
+    console.log(newAdd);
     await newAdd.save();
 
     return NextResponse.json({ newAdd });
@@ -63,12 +64,13 @@ export async function PUT(request: NextRequest) {
   try {
     await dbConnect();
 
-    const { _id, imageLink, link, title } = await request.json();
+    const { _id, imageLink, link, title, position } = await request.json();
 
     const ad = await Ad.findByIdAndUpdate(_id, {
       imageUrl: imageLink,
       link,
       title,
+      position,
     });
 
     return NextResponse.json({ status: 400 });

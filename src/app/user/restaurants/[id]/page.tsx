@@ -21,23 +21,26 @@ import Link from "next/link";
 import { GrFormNext } from "react-icons/gr";
 import { GrFormPrevious } from "react-icons/gr";
 import Loader from "@/components/landingPageComponent/Loader";
+import { FaArrowLeft } from "react-icons/fa6";
+import Advertisement from "@/components/landingPageComponent/Advertisement";
 
-
-const PageWrapper = forwardRef<HTMLDivElement, { pageNumber: number; pdfUrl: string }>(
-  ({ pageNumber, pdfUrl }, ref) => (
-    <div ref={ref} className="flip-page">
-      <Document file={pdfUrl}>
-        <PDFBook pageNumber={pageNumber} width={350} />
-      </Document>
-    </div>
-  )
-);
+const PageWrapper = forwardRef<
+  HTMLDivElement,
+  { pageNumber: number; pdfUrl: string }
+>(({ pageNumber, pdfUrl }, ref) => (
+  <div ref={ref} className="flip-page">
+    <Document file={pdfUrl}>
+      <PDFBook pageNumber={pageNumber} width={350} />
+    </Document>
+  </div>
+));
 
 PageWrapper.displayName = "PageWrapper";
 
 const RestaurantPdfs = ({ pdfUrl }: { pdfUrl: any }) => {
   const [numPages, setNumPages] = useState<number>(0);
-  const [currentPage, setCurrentPage] = useState<number>(0); // Flipbook uses 0-based indexing
+  const [currentPage, setCurrentPage] = useState<number>(0);
+  const [loading, setLoading] = useState<boolean>(false);
   const bookRef = useRef<any>(null);
 
   useEffect(() => {
@@ -46,9 +49,11 @@ const RestaurantPdfs = ({ pdfUrl }: { pdfUrl: any }) => {
 
   useEffect(() => {
     const loadPdf = async () => {
+      setLoading(true);
       const loadingTask = pdfjs.getDocument(pdfUrl);
       const pdf = await loadingTask.promise;
       setNumPages(pdf.numPages);
+      setLoading(false);
     };
 
     if (pdfUrl) loadPdf();
@@ -78,24 +83,30 @@ const RestaurantPdfs = ({ pdfUrl }: { pdfUrl: any }) => {
 
   return (
     <div className="flex flex-col items-center py-6 lg:py-10">
-<HTMLFlipBook
-     {... {
-      width: 370,
-      height: 500,
-      maxShadowOpacity: 0.5,
-      drawShadow: false,
-      showCover: true,
-      flippingTime:10,
-      size: "fixed",
-      className: "shadow-lg",
-      ref: bookRef,
-      onFlip:(e:any)=>{ setCurrentPage(e.data)}
-     } as any}
-     >
-        {Array.from({ length: numPages }, (_, index) => (
-          <PageWrapper key={index} pageNumber={index + 1} pdfUrl={pdfUrl} />
-        ))}
-      </HTMLFlipBook>
+      {loading ? (
+        <p>Loading pdf...</p>
+      ) : (
+        <HTMLFlipBook
+          {...({
+            width: 370,
+            height: 500,
+            maxShadowOpacity: 0.5,
+            drawShadow: false,
+            showCover: true,
+            flippingTime: 10,
+            size: "fixed",
+            className: "shadow-lg",
+            ref: bookRef,
+            onFlip: (e: any) => {
+              setCurrentPage(e.data);
+            },
+          } as any)}
+        >
+          {Array.from({ length: numPages }, (_, index) => (
+            <PageWrapper key={index} pageNumber={index + 1} pdfUrl={pdfUrl} />
+          ))}
+        </HTMLFlipBook>
+      )}
 
       <div className="flex gap-x-4 mt-4">
         <button
@@ -120,7 +131,6 @@ const RestaurantPdfs = ({ pdfUrl }: { pdfUrl: any }) => {
     </div>
   );
 };
-
 
 const Page = () => {
   const { id } = useParams();
@@ -147,28 +157,44 @@ const Page = () => {
   }, []);
 
   return (
-    <div className="bg-[#282C2F] text-white flex flex-col lg:flex-row justify-center items-center">
-      <div className=" lg:ml-14 lg:bg-card  lg:w-[400px] lg:h-[300px] mt-20  rounded-lg text-black p-2 flex justify-center items-center flex-col">
-        <h1 className="text-xl text-center text-white lg:text-black font-poppins">{data?.restaurantName}</h1>
-        <Link
-          className="text-lg text-red underline "
-          href={`/restaurant/${id}`}
-        >
-          View details
-        </Link>
+    <div className="bg-[#282C2F] w-full">
+      <Advertisement position="top"/>
+      <div className="w-full flex justify-center items-center">
+        <Button className="mt-10 mx-16 bg-red">
+          <Link href={"/"}>
+            <FaArrowLeft className="inline-block mx-2" />
+            Back to home
+          </Link>
+        </Button>
       </div>
-      <div className="w-screen h-screen max-w-7xl mx-auto flex justify-center items-center bg-[#282C2F]">
-        <div className="">
-          <h1 className="text-2xl font-comic font-semibold text-center underline ">
-            Restaurant menu pdf
+      <div className="bg-[#282C2F] text-white flex flex-col lg:flex-row justify-center items-center">
+        <div className=" lg:ml-14 lg:bg-card  lg:w-[400px] lg:h-[300px] mt-10  rounded-lg text-black p-2 flex justify-center items-center flex-col">
+          <h1 className="text-xl text-center text-white lg:text-black font-poppins">
+            {data?.restaurantName}
           </h1>
-          {data ? (
-            <>
-              <RestaurantPdfs pdfUrl={data?.pdfLinks} />
-            </>
-          ):<Loader/>}
+          <Link
+            className="text-lg text-red underline "
+            href={`/restaurant/${id}`}
+          >
+            View details
+          </Link>
+        </div>
+        <div className="w-screen h-screen max-w-7xl mx-auto flex justify-center items-center bg-[#282C2F]">
+          <div className="">
+            <h1 className="text-2xl font-comic font-semibold text-center underline ">
+              Restaurant menu pdf
+            </h1>
+            {data ? (
+              <>
+                <RestaurantPdfs pdfUrl={data?.pdfLinks} />
+              </>
+            ) : (
+              <Loader />
+            )}
+          </div>
         </div>
       </div>
+      <Advertisement position="inline"/>
     </div>
   );
 };

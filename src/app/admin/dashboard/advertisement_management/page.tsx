@@ -20,12 +20,21 @@ import Image from "next/image";
 import { LuLoader } from "react-icons/lu";
 import { Input } from "@/components/ui/input";
 import { FileUpload } from "@/components/ui/file-upload";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
 
 interface Iadds {
   _id: string;
   title: string;
   link: string;
   imageUrl: string;
+  position: "top" | "side" | "inline";
 }
 
 const AdvertisementDialogModel = ({
@@ -44,6 +53,7 @@ const AdvertisementDialogModel = ({
     imageUrl: "",
     link: "",
     _id: "",
+    position:"top"
   });
 
   console.log(ad);
@@ -98,9 +108,9 @@ const AdvertisementDialogModel = ({
     
       }
    
-      const {title , link , _id} = formState
+      const {title , link , _id , position} = formState
 
-      const newObj = {title , link , _id , imageLink}
+      const newObj = {title , link , _id , imageLink , position}
   
 
       const res = await axios.put(`/api/advertisement?id=${id}`, newObj);
@@ -202,6 +212,30 @@ const AdvertisementDialogModel = ({
                   name="link"
                   onChange={handleInput}
                 />
+              </>
+            )}
+             {!isEditingStatus ? (
+              <p>
+                <strong className="text-lg">Position:</strong> {ad.position}
+              </p>
+            ) : (
+              <>
+                <strong className="text-sm">Select Ad Position</strong>
+                <Select
+                  value={formState.position}
+                  onValueChange={(value: "top" | "side" | "inline") =>
+                    setFormState((prev) => ({ ...prev, position: value }))
+                  }
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select Position" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="top">Top</SelectItem>
+                    <SelectItem value="side">Side</SelectItem>
+                    <SelectItem value="inline">Inline</SelectItem>
+                  </SelectContent>
+                </Select>
               </>
             )}
           </div>

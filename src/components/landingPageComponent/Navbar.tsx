@@ -2,9 +2,9 @@
 
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { checkAUth } from "@/actions/auth";
+import { checkAUth, get_user_role } from "@/actions/auth";
 import Logout from "../Logout";
-import { Menu, X } from "lucide-react"; // Adding icons for mobile menu
+import { Menu, X } from "lucide-react";
 import Image from "next/image";
 
 const navItems = [
@@ -14,12 +14,22 @@ const navItems = [
 
 const Navbar = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [userRole, setUserRole] = useState<string | null>(null); // 🔧 role state
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
   useEffect(() => {
     const checkLogin = async () => {
       const isLoggedIn = await checkAUth();
+      const role = await get_user_role();
+      if(role){
+        setUserRole(role)
+      }
+    
+    
+
       setIsAuthenticated(isLoggedIn);
+
+     
     };
     checkLogin();
   }, []);
@@ -28,9 +38,43 @@ const Navbar = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const renderDashboardLink = () => {
+    if (userRole === "admin") {
+      return (
+        <Link
+          href="/admin/dashboard"
+          className="text-white text-sm font-semibold hover:text-orange underline"
+        >
+          Back to Admin Dashboard
+        </Link>
+      );
+    } else if (userRole === "owner") {
+      return (
+        <Link
+          href="/dashboard"
+         className="text-white text-sm font-semibold hover:text-orange underline"
+        >
+          Back to Restaurant Dashboard
+        </Link>
+      );
+    }
+    else if (userRole === "moderator") {
+      return (
+        <Link
+          href="/dashboard"
+         className="text-white text-sm font-semibold hover:text-orange underline"
+        >
+          Back to moderator dashboard
+        </Link>
+      );
+    }
+    return null;
+  };
+  
+
   return (
-    <nav className="w-full bg-red lg:bg-transparent   py-6 px-4 md:px-8 flex justify-between items-center relative">
-      {/* Logo or Brand Name */}
+    <nav className="w-full bg-red lg:bg-transparent py-6 px-4 md:px-8 flex justify-between items-center relative">
+      {/* Logo */}
       <div className="text-white text-xl font-bold">
         <div className="w-[60px] h-[60px] lg:w-[100px] lg:h-[100px] relative">
           <Image
@@ -54,9 +98,12 @@ const Navbar = () => {
             {item.name}
           </Link>
         ))}
+
+        {/* 🔧 Show Dashboard Link */}
+        {isAuthenticated && renderDashboardLink()}
       </div>
 
-      {/* Authentication Buttons (Desktop) */}
+      {/* Auth Buttons (Desktop) */}
       <div className="hidden md:flex gap-x-4 items-center">
         {!isAuthenticated ? (
           <>
@@ -75,7 +122,7 @@ const Navbar = () => {
         )}
       </div>
 
-      {/* Mobile Menu Button */}
+      {/* Mobile Menu Toggle */}
       <button className="text-white md:hidden" onClick={toggleMenu}>
         {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
       </button>
@@ -93,6 +140,9 @@ const Navbar = () => {
               {item.name}
             </Link>
           ))}
+
+          {/* 🔧 Dashboard Link in Mobile */}
+          {isAuthenticated && renderDashboardLink()}
 
           {!isAuthenticated ? (
             <>

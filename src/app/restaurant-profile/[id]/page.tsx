@@ -10,8 +10,9 @@ import { FcGoogle } from "react-icons/fc";
 import { MdOutlineLocationOn } from "react-icons/md";
 import { IoMdRestaurant } from "react-icons/io";
 import Loader from "@/components/landingPageComponent/Loader";
-import { FaFilePdf } from "react-icons/fa6";
+import { FaArrowLeft, FaFilePdf } from "react-icons/fa6";
 import RatingAndReviews from "@/components/landingPageComponent/RatingAndReviews";
+import { Button } from "@/components/ui/button";
 const Page = () => {
   const [data, setData] = useState<IRestaurant>();
   const [loading, setLoading] = useState<boolean>(false);
@@ -44,28 +45,34 @@ const Page = () => {
         </div>
       ) : (
         <div className="mt-20">
+           <Button className="mb-6 bg-red">
+          <Link href={`/user/restaurants/${data?._id}`}>
+            <FaArrowLeft    className="inline-block mx-2" />
+            Back to Localization
+          </Link>
+        </Button>
           <h1 className="font-comic text-3xl ">{data?.restaurantName}</h1>
           <p className="text-xl italic font-comic">{data?.description}!</p>
           <div className="flex flex-col mt-2 gap-y-1">
-            <Link href={data?.googlePage || ""} className="underline text-sm">
-              <CgWebsite className=" inline-block mr-3" size={25} />{" "}
+            <Link href={data?.googlePage || ""} className="underline text-xs sm:text-sm">
+              <CgWebsite className=" inline-block mr-3" />{" "}
               {data?.googlePage}
             </Link>
-            <Link href={data?.website_link || ""} className="underline text-sm">
-              <FcGoogle className=" inline-block mr-3" size={25} />{" "}
+            <Link href={data?.website_link || ""} className="underline text-xs sm:text-sm">
+              <FcGoogle className=" inline-block  sm:mr-3"  />{" "}
               {data?.website_link}
             </Link>
             <p className="text-sm">
               <MdOutlineLocationOn
-                className=" inline-block mr-3 font-comic"
-                size={25}
+                className=" inline-block sm:mr-3 font-comic text-xs sm:text-sm"
+                
               />
               {data?.address}
             </p>
-            <p className="text-lg inline-block mr-3">
+            <p className=" inline-block sm:mr-3 text-xs sm:text-lg">
               <IoMdRestaurant
-                className=" inline-block mr-3 font-comic"
-                size={25}
+                className=" inline-block sm:mr-3 font-comic"
+  
               />
               {data?.cuisineType || "Italic"}
             </p>

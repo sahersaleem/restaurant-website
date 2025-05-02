@@ -13,6 +13,9 @@ import { MdOutlineLocationOn } from "react-icons/md";
 import { IoMdRestaurant } from "react-icons/io";
 import { TimingSlot } from "@/types/types";
 import { IoMdArrowBack } from "react-icons/io";
+import { Button } from "@/components/ui/button";
+import { FaArrowLeft } from "react-icons/fa";
+import Advertisement from "@/components/landingPageComponent/Advertisement";
 const Page = () => {
   const { id } = useParams();
   const [data, setData] = useState<IRestaurant>();
@@ -42,7 +45,7 @@ const Page = () => {
       const res = await axios.get(
         `/api/restaurant/create_restaurant_timming?id=${id}`
       );
-      console.log(res.data.restaurantTimingsFindById)
+      console.log(res.data.restaurantTimingsFindById);
       setTimings(res.data.restaurantTimingsFindById);
     } catch (error: any) {
       console.log(error.message);
@@ -55,7 +58,12 @@ const Page = () => {
   }, []);
 
   return (
+
+    <div>
+ 
+    
     <div className="bg-slate-50 w-screen h-auto flex justify-center items-center  overflow-x-hidden min-h-screen">
+     
       {data && (
         <div className="max-w-[800px] w-full bg-card shadow-lg  rounded-lg p-10 mt-20 space-y-6 ">
           <div className="flex justify-between flex-col lg:flex-row">
@@ -67,7 +75,12 @@ const Page = () => {
               className="rounded-lg shadow-lg"
             />
             <div className="">
-              <Link href={`/user/restaurants/${data._id}`} className="text-sm underline"><IoMdArrowBack className="inline-block"/>Back to menu</Link>
+              <Button className=" bg-red mt-6 sm:mt-0">
+                <Link href={`/user/restaurants/${data._id}`}>
+                  <FaArrowLeft className="inline-block mx-2" />
+                  Back to menu pdf
+                </Link>
+              </Button>
               <h1 className="mt-4 font-semibold text-2xl font-comic">
                 {data?.restaurantName}
               </h1>
@@ -78,12 +91,12 @@ const Page = () => {
                 {data?.description}
               </p>
               <div className="flex flex-col mt-2 gap-y-1">
-                <Link href={data!.googlePage!} className="underline text-sm">
-                  <CgWebsite className=" inline-block mr-3" size={20} />{" "}
+                <Link href={data!.googlePage!} className="underline text-xs sm:text-sm">
+                  <CgWebsite className=" inline-block sm:mr-3"  />{" "}
                   {data?.googlePage}
                 </Link>
-                <Link href={data!.website_link!} className="underline text-sm">
-                  <FcGoogle className=" inline-block mr-3" size={20} />{" "}
+                <Link href={data!.website_link!} className="underline text-xs sm:text-sm">
+                  <FcGoogle className=" inline-block sm:mr-3"  />{" "}
                   {data!.website_link!}
                 </Link>
                 <p className="text-sm">
@@ -93,10 +106,10 @@ const Page = () => {
                   />
                   {data.address}
                 </p>
-                <p className="text-lg inline-block mr-3">
+                <p className="text-lg inline-block sm:mr-3">
                   <IoMdRestaurant
                     className=" inline-block mr-3 font-comic"
-                    size={20}
+                   
                   />
                   {data.cuisineType || "Italic"}
                 </p>
@@ -133,7 +146,11 @@ const Page = () => {
             id={data._id!}
           />
         </div>
+        
       )}
+      
+    </div>
+    <Advertisement position="inline"/>
     </div>
   );
 };

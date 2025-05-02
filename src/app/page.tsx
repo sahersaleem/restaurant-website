@@ -9,12 +9,13 @@ export default function Home() {
   return (
     <div className=" w-full bg-[#18171C] h-screen ">
       <div className=" h-auto  max-w-7xl mx-auto">
+   
         <Navbar />
         <Hero />
         <All_restaurants/>
    
       </div>
-      <Advertisement/>
+      <Advertisement position="inline"/>
       <Footer/>
     </div>
   );

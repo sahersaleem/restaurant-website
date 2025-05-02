@@ -5,6 +5,12 @@ const AdSchema = new mongoose.Schema({
   imageUrl: String,
   link: String,
   isActive: { type: Boolean, default: true },
+  position: {
+    type: String,
+    enum: ["top", "side", "inline"],
+    required: true,
+    default: "top", 
+  },
   createdAt: { type: Date, default: Date.now },
 });
 

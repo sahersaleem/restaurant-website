@@ -21,7 +21,10 @@ export const restaurantDashboardLinks = [
 
 export const admin_dashboard_links = [
 
-
+  {
+    label: "Dashboard",
+    href: "/admin/dashboard", 
+  },
   {
     label: "Users",
     href: "/admin/dashboard/user_management", 
