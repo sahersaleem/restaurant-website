@@ -18,6 +18,7 @@ const Admin_Dashboard = () => {
     >
       {/* Top Logo and Button */}
       <div className="flex items-center justify-between">
+        <Link href={"/"}>
         <Image
           src="/images/logo.png"
           width={180}
@@ -26,7 +27,7 @@ const Admin_Dashboard = () => {
           className={`transition-all duration-300 ${
             isOpen ? "w-32 h-24" : "w-0 h-0"
           } lg:w-[120px] lg:h-[120px]`}
-        />
+        /></Link>
         {/* Toggle Button only on small screens */}
         <FaBars
           className="text-2xl cursor-pointer lg:hidden"
