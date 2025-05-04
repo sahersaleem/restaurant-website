@@ -3,7 +3,7 @@
 import { logout } from "@/actions/logout";
 import { redirect, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-
+import { IoMdLogOut } from "react-icons/io";
 const Logout = () => {
   const [islogout, setisLogout] = useState(false);
   const router = useRouter();
@@ -18,7 +18,7 @@ const Logout = () => {
     }
   };
 
-  return <button onClick={handleClick} className="button">Se déconnecter</button>;
+  return <button onClick={handleClick} className="button"><IoMdLogOut size={25}/></button>;
 };
 
 export default Logout;
