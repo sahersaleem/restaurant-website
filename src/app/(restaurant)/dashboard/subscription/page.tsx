@@ -64,7 +64,7 @@ const Page = () => {
           <p className="text-gray-700 mb-6 font-poppins">
           Vous voulez plus de commandes et le meilleur placement ? Pour seulement
           {" "}
-            <span className="font-bold text-yellow-500 ">${amount}</span>Avoir
+            <span className="font-bold text-yellow-500 ">€{amount}</span>Avoir
 En vedette sur notre page d’accueil et en haut des résultats de recherche !
 
           </p>

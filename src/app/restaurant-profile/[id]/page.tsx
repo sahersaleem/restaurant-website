@@ -86,7 +86,7 @@ const Page = () => {
               </span>
             </Link>
           </div>
-          <RatingAndReviews/>
+         
         </div>
       )}
     </div>

@@ -54,6 +54,7 @@ const Page = () => {
       formData.append("files", files);
 
       try {
+        setLoading(true)
         const res = await axios.post("/api/restaurant/menu_upload", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
@@ -67,9 +68,7 @@ const Page = () => {
             uploaded_url,
           });
 
-          if (thumbnail.data.link) {
-            console.log(thumbnail.data.link);
-          }
+        
 
           const pdfsData = {
             pdfLinks: uploaded_url,
@@ -78,7 +77,7 @@ const Page = () => {
           };
 
 
-          console.log(pdfsData)
+          
           setLoading(true);
 
           const response = await axios.put(

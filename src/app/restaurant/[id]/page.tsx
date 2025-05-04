@@ -16,6 +16,7 @@ import { IoMdArrowBack } from "react-icons/io";
 import { Button } from "@/components/ui/button";
 import { FaArrowLeft } from "react-icons/fa";
 import Advertisement from "@/components/landingPageComponent/Advertisement";
+import RatingAndReviews from "@/components/landingPageComponent/RatingAndReviews";
 const Page = () => {
   const { id } = useParams();
   const [data, setData] = useState<IRestaurant>();
@@ -65,7 +66,7 @@ const Page = () => {
     <div className="bg-slate-50 w-screen h-auto flex justify-center items-center  overflow-x-hidden min-h-screen">
      
       {data && (
-        <div className="max-w-[800px] w-full bg-card shadow-lg  rounded-lg p-10 mt-20 space-y-6 ">
+        <div className="max-w-[800px] w-full bg-card shadow-lg  rounded-lg p-10 mt-20 space-y-6  mb-10">
           <div className="flex justify-between flex-col lg:flex-row">
             <Image
               src={data?.logo || ""}
@@ -99,14 +100,14 @@ const Page = () => {
                   <FcGoogle className=" inline-block sm:mr-3"  />{" "}
                   {data!.website_link!}
                 </Link>
-                <p className="text-sm">
+                <p className="underline text-xs sm:text-sm">
                   <MdOutlineLocationOn
-                    className=" inline-block mr-3 font-comic"
+                    className=" inline-block sm:mr-3 font-comic"
                     size={20}
                   />
                   {data.address}
                 </p>
-                <p className="text-lg inline-block sm:mr-3">
+                <p className="text-sm inline-block sm:mr-3">
                   <IoMdRestaurant
                     className=" inline-block mr-3 font-comic"
                    
@@ -119,21 +120,21 @@ const Page = () => {
 
           <div>
             <h1 className="mt-4 font-bold text-xl font-comic ">Horaires</h1>
-            <div className="text-sm sm:text-lg rounded-lg flex flex-col w-full">
+            <div className="text-xs sm:text-sm rounded-lg flex flex-col w-full">
               {timings?.map((timing, index) => (
                 <div
                   key={index}
-                  className="flex justify-between items-center lg:px-6
+                  className="flex items-center gap-x-8 
 }"
                 >
                   <p>{timing.days}</p>
                   <div>
                     {timing.slots.length > 1 ? (
                       <div className=" ">
-                        {timing.slots[0]} to {timing.slots[1]}
+                        {timing.slots[0]} to {timing.slots[1]} 
                       </div>
                     ) : (
-                      timing.slots[0]
+                      timing.slots[0] 
                     )}
                   </div>
                 </div>
@@ -145,6 +146,9 @@ const Page = () => {
             address={data!.address!}
             id={data._id!}
           />
+          <div className="mt-10">
+           <RatingAndReviews/>
+           </div>
         </div>
         
       )}

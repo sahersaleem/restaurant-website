@@ -84,7 +84,7 @@ const handleRoute = async(id:string)=>{
             center={coordinate}
             zoom={15}
           >
-            <Marker position={coordinate} title={restaurantName} onClick={()=>{handleRoute(id)}} />
+            {/* <Marker position={coordinate} title={restaurantName} onClick={()=>{handleRoute(id)}} /> */}
           </GoogleMap>
         )}
       </LoadScript>

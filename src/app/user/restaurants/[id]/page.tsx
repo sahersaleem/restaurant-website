@@ -91,9 +91,9 @@ const RestaurantPdfs = ({ pdfUrl }: { pdfUrl: any }) => {
             width: 370,
             height: 500,
             maxShadowOpacity: 0.5,
-            drawShadow: false,
+            drawShadow: true,
             showCover: true,
-            flippingTime: 10,
+
             size: "fixed",
             className: "shadow-lg",
             ref: bookRef,
@@ -158,7 +158,7 @@ const Page = () => {
 
   return (
     <div className="bg-[#282C2F] w-full">
-      <Advertisement position="top"/>
+      <Advertisement position="top" />
       <div className="w-full flex justify-center items-center">
         <Button className="mt-10 mx-16 bg-red">
           <Link href={"/"}>
@@ -176,14 +176,14 @@ const Page = () => {
             className="text-lg text-red underline "
             href={`/restaurant/${id}`}
           >
-           Voir les détails
+            Voir les détails
           </Link>
         </div>
-        <div className="w-screen h-screen max-w-7xl mx-auto flex justify-center items-center bg-[#282C2F]">
+        <div className="w-screen min-h-[40vh]  max-w-7xl mx-auto flex justify-center items-center bg-[#282C2F]">
           <div className="">
-            <h1 className="text-2xl font-comic font-semibold text-center underline ">
-            Carte du restaurant pdf
-            </h1>
+            {/* <h1 className="text-2xl font-comic font-semibold text-center underline ">
+              Carte du restaurant pdf
+            </h1> */}
             {data ? (
               <>
                 <RestaurantPdfs pdfUrl={data?.pdfLinks} />
@@ -194,7 +194,7 @@ const Page = () => {
           </div>
         </div>
       </div>
-      <Advertisement position="inline"/>
+      <Advertisement position="inline" />
     </div>
   );
 };

@@ -247,7 +247,7 @@ const Page = () => {
             {isEditing ? (
               <Button
                 onClick={handleSave}
-                className="bg-red text-xs sm:text-base w-[100px] mt-10 sm:mt-0"
+                className="bg-red text-xs  w-[100px] mt-10 sm:mt-0 px-5"
               >
                 {loading ? (
                   <LuLoader size={30} className="animate-spin" />

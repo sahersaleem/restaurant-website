@@ -65,7 +65,7 @@ const All_restaurants = () => {
 
   return (
     <div
-      className="h-full pb-10   static  mb-20 -mt-20 lg:mb-10 lg:-mt-44 bg-white "
+      className="h-full pb-10   static  mb-20 -mt-20 lg:mb-10 lg:-mt-44 "
       id="all_restaurants"
     >
       <Toaster position="bottom-right" reverseOrder={false} />

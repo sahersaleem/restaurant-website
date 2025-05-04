@@ -81,7 +81,7 @@ const Page = () => {
                 <div className="font-poppins flex flex-col gap-y-1 text-xs sm:text-base">
                   <h1>Prix d’inscription SCurrent pour les restaurants</h1>
                   <p className="text-lg sm:text-2xl font-poppins font-semibold">
-                    ${data?.featuredPrice}
+                  € {data?.featuredPrice}
                   </p>
                 </div>
               </div>
@@ -95,6 +95,7 @@ const Page = () => {
                     setPrice(Number(e.target.value));
                   }}
                   placeholder="Enter featured price ."
+                  type="number"
                 />
                 <Button onClick={handleInput}>
                   {loading ? (
