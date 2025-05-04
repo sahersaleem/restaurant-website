@@ -2,7 +2,7 @@ import { Restaurant } from "@/models/Restaurant";
 import dbConnect from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
 
-export default async function GET(
+export async function GET(
   request:NextRequest
 ) {
   try {
