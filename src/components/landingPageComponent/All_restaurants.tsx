@@ -55,11 +55,11 @@ const All_restaurants = () => {
   });
 
   return (
-    <div className="h-auto pb-10  lg:pb-20 mt-20 lg:mt-0" id="all_restaurants">
+    <div className="h-full pb-10   static  mb-20 -mt-20 lg:mb-10 lg:-mt-48 bg-white " id="all_restaurants">
     <Toaster position="bottom-right" reverseOrder={false} />
     
     {/* Heading Animation */}
-    <motion.h1 
+    {/* <motion.h1 
       className="text-4xl text-center font-semibold font-comic"
       initial={{ opacity: 0, y: -50 }}
       animate={{ opacity: 1, y: 0 }}
@@ -69,7 +69,7 @@ const All_restaurants = () => {
     </motion.h1>
 
     {/* Search Bar Animation */}
-    <motion.div 
+    {/* <motion.div 
       className="w-full flex items-center justify-center mt-10"
       initial={{ opacity: 0, y: -30 }}
       animate={{ opacity: 1, y: 0 }}
@@ -84,7 +84,7 @@ const All_restaurants = () => {
         />
         <SearchIcon className="text-red font-bold" size={30} />
       </div>
-    </motion.div>
+    </motion.div> */} 
 
     {/* Loader */}
     {loading && (
@@ -105,7 +105,7 @@ const All_restaurants = () => {
         },
       }}
     >
-      <Advertisement position="top"/>
+      {/* <Advertisement position="top"/> */}
       {!searchTerm && data?.map((item: any) => (
 
         <motion.div
@@ -122,7 +122,7 @@ const All_restaurants = () => {
               width={270}
               height={600}
               alt="restaurant"
-              className=" w-[150px] h-[150px] sm:w-[200px] sm:h-[200px] object-cover rounded-md"
+              className=" w-[150px] h-[200px] sm:w-[220px] sm:h-[300px] object-cover rounded-md"
             />
           </Link>
 
@@ -134,9 +134,9 @@ const All_restaurants = () => {
 
             <button onClick={() => addProduct(item._id)}>
               {wishList.includes(item._id) ? (
-                <FaHeart className="text-red" size={20} />
+                <FaHeart className="text-red text-lg" />
               ) : (
-                <HeartIcon size={20} />
+                <HeartIcon className="text-red text-lg" />
               )}
             </button>
           </div>
