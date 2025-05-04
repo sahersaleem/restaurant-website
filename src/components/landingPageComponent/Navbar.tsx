@@ -48,9 +48,9 @@ const Navbar = () => {
       const res = await axios.get(
         `/api/search-suggestions?query=${searchTerm}`
       );
-      console.log(res.data);
+    console.log(res)
       if (res.data) {
-        setSuggestions(res.data);
+        setSuggestions(res.data.suggestions);
       }
     };
 
@@ -65,6 +65,11 @@ const Navbar = () => {
       setIsAuthenticated(isLoggedIn);
     };
     checkLogin();
+  }, []);
+
+  useEffect(() => {
+    // URL se query remove karo page load ke baad
+    router.replace("/", undefined);
   }, []);
 
   const toggleMenu = () => {
@@ -119,45 +124,56 @@ const Navbar = () => {
           />
         </Link>
 
-        {/* Desktop Right Side Buttons */}
-        <div className="hidden md:flex items-center gap-x-4">
-          <div className="flex items-center justify-center gap-x-4 border  px-4 py-2 rounded-lg bg-white">
-            <input
-              placeholder="Recherchez un restaurant par cuisine, nom du restaurant et emplacement.."
-              className="outline-none  font-comic w-full text-xs sm:text-sm"
-              value={searchTerm}
-              onChange={(e) => {
-                setSearchTerm(e.target.value);
-              }}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  handleSearch();
-                }
-              }}
-            />
-            {suggestions && suggestions.length > 0 && (
-              <ul className="bg-white shadow mt-2 rounded">
-                {suggestions.map((sug, index) => (
-                  <li key={index} className="px-2 py-1 border-b">
-                    shbshb
-                  </li>
-                ))}
-              </ul>
-            )}
-            <SearchIcon className="text-red font-bold" size={30} />
-          </div>
-          {!isAuthenticated ? (
-            <>
-              <Link href="/login" className="button">
-                <IoPersonOutline size={25} />
-              </Link>
-            </>
-          ) : (
-            <button onClick={handleClick} className="button">
-              <IoMdLogOut size={25} />
-            </button>
-          )}
-        </div>
+      {/* Desktop Right Side Buttons */}
+<div className="hidden md:flex items-center gap-x-4 relative">
+  <div className="flex items-center justify-center gap-x-4 border px-4 py-2 rounded-lg bg-white relative">
+    <input
+      placeholder="Recherchez un restaurant par cuisine, nom du restaurant et emplacement.."
+      className="outline-none font-comic w-full text-xs sm:text-sm"
+      value={searchTerm}
+      onChange={(e) => {
+        setSearchTerm(e.target.value);
+      }}
+      onKeyDown={(e) => {
+        if (e.key === "Enter") {
+          handleSearch();
+        }
+      }}
+    />
+    <SearchIcon className="text-red font-bold" size={30} />
+
+    {/* Suggestions Dropdown */}
+    {suggestions && suggestions.length > 0 && (
+      <ul className="absolute top-full left-0 w-full bg-white shadow mt-1 rounded z-10">
+        {suggestions.map((sug, index) => (
+          <li
+            key={index}
+            className="px-2 py-1 border-b text-sm hover:bg-gray-100 cursor-pointer"
+            onClick={() => {
+              setSearchTerm(sug);
+              setSuggestions(null);
+              router.push(`/?query=${encodeURIComponent(sug)}`);
+            }}
+          >
+            {sug}
+          </li>
+        ))}
+      </ul>
+    )}
+  </div>
+
+  {/* Login/Logout Button */}
+  {!isAuthenticated ? (
+    <Link href="/login" className="button">
+      <IoPersonOutline size={25} />
+    </Link>
+  ) : (
+    <button onClick={handleClick} className="button">
+      <IoMdLogOut size={25} />
+    </button>
+  )}
+</div>
+
 
         {/* Mobile Menu Toggle */}
         <div className="md:hidden flex items-center gap-4">
@@ -249,7 +265,7 @@ const Navbar = () => {
             transition={{ duration: 0.3 }}
             className="fixed top-12 left-0 w-full z-50 p-4 "
           >
-            <div className="flex justify-between items-center">
+            <div className="flex items-center">
               <input
                 type="text"
                 placeholder="Entrez le nom du restaurant..."
@@ -264,6 +280,23 @@ const Navbar = () => {
                   }
                 }}
               />
+               {suggestions && suggestions.length > 0 && (
+      <ul className="absolute top-full left-0 w-full bg-white shadow  rounded z-10">
+        {suggestions.map((sug, index) => (
+          <li
+            key={index}
+            className="px-2 py-1 border-b text-sm hover:bg-gray-100 cursor-pointer"
+            onClick={() => {
+              setSearchTerm(sug);
+              setSuggestions(null);
+              router.push(`/?query=${encodeURIComponent(sug)}`);
+            }}
+          >
+            {sug}
+          </li>
+        ))}
+      </ul>
+    )}
               <button onClick={() => setIsSearchOpen(false)}>
                 <X size={24} className="text-black" />
               </button>

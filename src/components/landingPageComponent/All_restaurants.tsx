@@ -60,6 +60,9 @@ const All_restaurants = () => {
     return [];
   });
 
+
+
+
   return (
     <div
       className="h-full pb-10   static  mb-20 -mt-20 lg:mb-10 lg:-mt-20 bg-white "
@@ -68,15 +71,14 @@ const All_restaurants = () => {
       <Toaster position="bottom-right" reverseOrder={false} />
 
       {/* Heading Animation */}
-       <motion.h1 
-      className="text-4xl text-center font-semibold font-comic hidden lg:inline-block"
-      initial={{ opacity: 0, y: -50 }}
+    {  searchTerm && <motion.h1 
+      className="text-4xl text-center font-semibold font-comic  w-full hidden lg:inline-block"
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
     >
       Résultats de recherche pour: {searchTerm}
     </motion.h1>
-
+}
     {/* Search Bar Animation */}
       {/* <motion.div 
       className="w-full flex items-center justify-center mt-10"
@@ -114,7 +116,7 @@ const All_restaurants = () => {
           },
         }}
       >
-        {/* <Advertisement position="top"/> */}
+        <Advertisement position="top"/>
         {!searchTerm &&
           data?.map((item: any) => (
             <motion.div
