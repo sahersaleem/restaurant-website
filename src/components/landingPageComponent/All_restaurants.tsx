@@ -106,7 +106,7 @@ const All_restaurants = () => {
 
       {/* Restaurants Grid */}
       <motion.div
-        className="flex items-center gap-4 mt-20 justify-center flex-wrap"
+        className="flex items-center gap-4 mt-20 justify-center flex-wrap flex-row"
         initial="hidden"
         animate="visible"
         variants={{
@@ -133,13 +133,13 @@ const All_restaurants = () => {
                   width={270}
                   height={600}
                   alt="restaurant"
-                  className=" w-[150px] h-[200px] sm:w-[220px] sm:h-[300px] object-cover rounded-md"
+                  className=" w-[140px] h-[200px] sm:w-[220px] sm:h-[300px] object-cover rounded-md"
                 />
               </Link>
 
               <div className="flex justify-between mt-4">
                 <div className="flex flex-col">
-                  <p className="text-xs sm:text-sm font-semibold font-comic">
+                  <p className="text-xs sm:text-sm font-semibold font-comic ">
                     {item.restaurantName}
                   </p>
                   <p className="text-xs sm:text-sm font-bold font-comic text-red">

@@ -157,7 +157,7 @@ const Page = () => {
   }, []);
 
   return (
-    <div className="bg-[#282C2F] w-full">
+    <div className="bg-[#282C2F] w-full h-screen">
       <Advertisement position="top" />
       <div className="w-full flex justify-center items-center">
         <Button className="mt-10 mx-16 bg-red">
@@ -179,7 +179,7 @@ const Page = () => {
             Voir les détails
           </Link>
         </div>
-        <div className="w-screen min-h-[40vh]  max-w-7xl mx-auto flex justify-center items-center bg-[#282C2F]">
+        <div className="w-screen min-h-[40vh] lg:min-h-[70vh]  max-w-7xl mx-auto flex justify-center items-center bg-[#282C2F]">
           <div className="">
             {/* <h1 className="text-2xl font-comic font-semibold text-center underline ">
               Carte du restaurant pdf

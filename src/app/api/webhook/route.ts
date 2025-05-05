@@ -40,15 +40,20 @@ export async function POST(request: NextRequest) {
       stripeSessionId: paymentIntendId,
       amount: amount,
       status: "paid",
-      currency:"usd"
+      currency: "usd",
     });
 
     await featuredRestaurant.save();
-
+    const oneMonthLater = new Date();
+    oneMonthLater.setMonth(oneMonthLater.getMonth() + 1);
     const updateRestaurant = await Restaurant.findByIdAndUpdate(restaurantId, {
       isFeatured: true,
+      featuredTill: oneMonthLater,
     });
 
+   
+
+  
     return NextResponse.json({ message: "recieved" });
   } else {
     return new NextResponse(`unhandled event error, ${event.type}`, {

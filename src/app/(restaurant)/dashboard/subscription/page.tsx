@@ -5,10 +5,15 @@ import { Button } from "@/components/ui/button";
 import { LuCircleCheckBig } from "react-icons/lu";
 import { FaMedal } from "react-icons/fa";
 import axios from "axios";
+import { useRestaurantContext } from "../../_components/RstaurantContext";
+import CartContext from "@/components/landingPageComponent/CartContext";
+import { IRestaurant } from "@/types/types";
 
 const Page = () => {
   const [id, setId] = useState<string>("");
   const [amount, setAmount] = useState<string>("");
+  const { restaurantId } = useRestaurantContext();
+  const [data, setData] = useState<IRestaurant>();
 
   const get_current_price = async () => {
     try {
@@ -19,7 +24,22 @@ const Page = () => {
       console.log(error.message);
     }
   };
-  
+
+  useEffect(() => {
+    const getRestaurants = async () => {
+      try {
+        const res = await axios.get(
+          `/api/restaurant/get_restaurants?id=${restaurantId}`
+        );
+        setData(res.data.findRestaurantById);
+      } catch (error: any) {
+        console.log(error.message);
+      }
+    };
+
+    getRestaurants();
+  }, []);
+
   useEffect(() => {
     get_current_price();
   }, []);
@@ -35,12 +55,12 @@ const Page = () => {
 
   const handlePayment = async () => {
     try {
-     const data = {amount , id}
-     console.log(data)
-      const res = await axios.post("/api/checkout",{data});
-      console.log(res)
-      if(res.data.url){
-        window.location.href=res.data.url
+      const data = { amount, id };
+      console.log(data);
+      const res = await axios.post("/api/checkout", { data });
+      console.log(res);
+      if (res.data.url) {
+        window.location.href = res.data.url;
       }
     } catch (error: any) {
       console.log("Error occur while creating checkout session.");
@@ -48,53 +68,61 @@ const Page = () => {
   };
 
   return (
-    <div className="w-full h-full pb-20">
-      <h1 className="text-xl underline sm:text-4xl text-center font-bold font-poppins mt-6 sm:mt-10">
-      Abonnement
+    <CartContext>
+      <div className="w-full h-full pb-20">
 
-      </h1>
+        
+        <h1 className="text-xl underline sm:text-4xl text-center font-bold font-poppins mt-6 sm:mt-10">
+          Abonnement
+        </h1>
 
-      <div className="min-h-screen flex justify-center items-center px-6">
-        <div className="bg-white shadow-xl rounded-xl px-6 py-6 sm:p-10 max-w-xl text-center">
-          <h1 className="text-xl sm:text-3xl font-bold mb-4 " >
-            <FaMedal className="text-8xl text-yellow-500 font-poppins" />
-            Mettez en valeur votre restaurant !
-
-          </h1>
-          <p className="text-gray-700 mb-6 font-poppins">
-          Vous voulez plus de commandes et le meilleur placement ? Pour seulement
-          {" "}
-            <span className="font-bold text-yellow-500 ">€{amount}</span>Avoir
-En vedette sur notre page d’accueil et en haut des résultats de recherche !
-
-          </p>
-          <ul className="text-left list-disc ml-6 text-gray-600 mb-6">
-            <li className="list-none sm:text-2xl font-poppins font-semibold">
-              <LuCircleCheckBig className="inline sm:text-2xl text-green-600" />{" "}
-              En tête des résultats de recherche
-            </li>
-            <li className="list-none sm:text-2xl font-poppins font-semibold">
-              <LuCircleCheckBig className="inline sm:text-2xl text-green-600" />{" "}
-              Promu sur la page d’accueil
-            </li>
-            <li className="list-none sm:text-2xl font-poppins font-semibold">
-              <LuCircleCheckBig className="inline sm:text-2xl text-green-600" />{" "}
-              Pr Badge en vedette pour votre profil
-            </li>
-            <li className="list-none sm:text-2xl font-poppins font-semibold">
-              <LuCircleCheckBig className="inline sm:text-2xl text-green-600" />{" "}
-              Plus de visibilité, plus de commandes !
-            </li>
-          </ul>
-          <Button
-            className="bg-red  text-white text-lg  rounded-full w-full "
-            onClick={handlePayment}
-          >
-            Payer avec Stripe
-          </Button>
+        <div className="min-h-screen flex justify-center items-center px-6">
+          <div className="bg-white shadow-xl rounded-xl px-6 py-6 sm:p-10 max-w-xl text-center">
+            <h1 className="text-xl sm:text-3xl font-bold mb-4 ">
+              <FaMedal className="text-8xl text-yellow-500 font-poppins" />
+              Mettez en valeur votre restaurant !
+            </h1>
+            <p className="text-gray-700 mb-6 font-poppins">
+              Vous voulez plus de commandes et le meilleur placement ? Pour
+              seulement{" "}
+              <span className="font-bold text-yellow-500 ">€{amount}</span>Avoir
+              En vedette sur notre page d’accueil et en haut des résultats de
+              recherche !
+            </p>
+            <ul className="text-left list-disc ml-6 text-gray-600 mb-6">
+              <li className="list-none sm:text-2xl font-poppins font-semibold">
+                <LuCircleCheckBig className="inline sm:text-2xl text-green-600" />{" "}
+                En tête des résultats de recherche
+              </li>
+              <li className="list-none sm:text-2xl font-poppins font-semibold">
+                <LuCircleCheckBig className="inline sm:text-2xl text-green-600" />{" "}
+                Promu sur la page d’accueil
+              </li>
+              <li className="list-none sm:text-2xl font-poppins font-semibold">
+                <LuCircleCheckBig className="inline sm:text-2xl text-green-600" />{" "}
+                Pr Badge en vedette pour votre profil
+              </li>
+              <li className="list-none sm:text-2xl font-poppins font-semibold">
+                <LuCircleCheckBig className="inline sm:text-2xl text-green-600" />{" "}
+                Plus de visibilité, plus de commandes !
+              </li>
+            </ul>
+            {data?.isFeatured ? (
+              <div className="mt-6 text-lg font-semibold text-red">
+                Already Subscribed! Your restaurant is featured for 1 month.
+              </div>
+            ) : (
+              <Button
+                className="bg-red text-white text-lg rounded-full w-full"
+                onClick={handlePayment}
+              >
+                Payer avec Stripe
+              </Button>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </CartContext>
   );
 };
 

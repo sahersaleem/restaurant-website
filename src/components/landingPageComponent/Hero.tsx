@@ -4,7 +4,7 @@ import React from "react";
 
 const Hero = () => {
   return (
-    <div className=" mt-10 lg:-mt-20 w-full flex  lg:justify-between items-center flex-col lg:flex-row px-10  lg:gap-y-10  lg:pb-0   h-auto lg:h-screen   lg:bg-transparent ">
+    <div className=" mt-10 lg:-mt-20 w-full flex  lg:justify-between items-center flex-col lg:flex-row px-10  lg:gap-y-10  lg:pb-0   h-auto md:h-[60vh] lg:h-screen  lg:bg-transparent ">
       <div className="w-full">
         <h2 className="text-[#DA3255] font-chew tracking-wide hidden lg:inline-block sm:text-2xl text-center lg:text-3xl lg:text-left">
           T’as faim ? Clique, cherche, mange

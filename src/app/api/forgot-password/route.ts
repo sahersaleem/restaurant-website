@@ -30,7 +30,7 @@ export async function POST(request: Request) {
 
   console.log(token);
   
-    const resetLink = `http://localhost:3000/reset-password?token=${token}`;
+    const resetLink = `${process.env.NEXT_PUBLIC_DOMAIN!}/reset-password?token=${token}`;
 
     await sendConfirmationEmail(email, resetLink);
 

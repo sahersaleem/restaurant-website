@@ -21,7 +21,7 @@ const RestaurantSchema = new Schema(
       default: 'pending', 
     },
     isFeatured:{type:Boolean , default:false ,required: false },
-
+    featuredTill: { type: Date, required: false },
     owner: {
       type: Schema.Types.ObjectId,
       ref: "LoginModel",

@@ -8,7 +8,7 @@ import { Suspense } from "react";
 
 export default function Home() {
   return (
-    <div className=" w-full lg:bg-[#18171C] h-[90vh]  ">
+    <div className=" w-full lg:bg-[#18171C] h-[60vh] lg:h-[90vh]  ">
       <Suspense fallback={<div>Loading...</div>}>
         <Navbar />
       </Suspense>
