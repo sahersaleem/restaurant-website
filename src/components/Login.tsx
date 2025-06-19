@@ -38,13 +38,12 @@ const Login = () => {
   const handleForm = async (data: any) => {
     try {
       setProcessing(true);
-      const {email , password } = data
-      const loginData = {email , password , rememberMe}
-      console.log(loginData)
+      const { email, password } = data;
+      const loginData = { email, password, rememberMe };
+      console.log(loginData);
       const res = await axios.post("/api/login", loginData);
 
       if (res) {
-        
         setProcessing(false);
         if (res.data.role == "owner") {
           router.push("/dashboard");
@@ -111,7 +110,12 @@ const Login = () => {
                   />
                   Remember me
                 </label>
-                <Link href={"/forgot-password"} className="text-sm underline text-red">Forgot password</Link>
+                <Link
+                  href={"/forgot-password"}
+                  className="text-sm underline text-red"
+                >
+                  Forgot password
+                </Link>
               </div>
 
               <Button
@@ -121,6 +125,14 @@ const Login = () => {
               >
                 {processing ? <Loader className="animate-spin" /> : "Login"}
               </Button>
+
+              <Link href="/signUp" className="text-center w-ful inline-block underline text-red mt-5">
+               
+               
+                   
+                want to Sign Up?
+                
+              </Link>
             </form>
           </CardDescription>
         </CardContent>
